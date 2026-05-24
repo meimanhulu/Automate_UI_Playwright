@@ -7,6 +7,9 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
+    "test:metrics": "playwright test && node metrics/extract-metrics.js",
+    "metrics:only": "node metrics/extract-metrics.js",
+    "metrics:history": "node -e \"const data = require('./metrics/metrics-history.json'); console.log('\\n📊 METRICS HISTORY SUMMARY\\n' + '='.repeat(50)); data.forEach((m, i) => console.log(`[${i + 1}] ${m.date} | Pass: ${m.passRate}% | Time: ${m.executionTimeMin}min | Flaky: ${m.flaky}`)); console.log('='.repeat(50) + '\\n');\"",
     "report": "playwright show-report results/reports/playwright-report",
     "codegen": "playwright codegen",
     "typecheck": "tsc -p tsconfig.json --noEmit"

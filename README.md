@@ -42,7 +42,49 @@ npx playwright test tests/qr-generate-mobile.spec.ts
 # Run with UI mode
 npx playwright test --ui
 
-## 🔐 Environment Variables
+## � QA Metrics
+Track test quality and automation savings with automated metrics reporting.
+
+### How to Run Metrics
+
+```bash
+# Run tests and extract metrics automatically
+npm run test:metrics
+
+# Extract metrics from existing test results
+npm run metrics:only
+
+# View historical metrics summary
+npm run metrics:history
+```
+
+### Latest Metrics
+
+| Metric | Latest Value |
+|--------|-------------|
+| Total TC | - |
+| Passed | - |
+| Failed | - |
+| Pass Rate | - % |
+| Execution Time | - min |
+| Manual Est. Time | - min |
+| Time Saved | - min |
+| Flaky Tests | - |
+
+### Metrics Explained
+
+- **Total TC** - Number of test cases executed
+- **Passed** - Tests that passed on first attempt
+- **Failed** - Tests that failed
+- **Pass Rate** - Percentage of passed tests (target: >= 90%)
+- **Execution Time** - Actual time to run all tests
+- **Manual Est. Time** - Estimated manual testing time (5 min per test)
+- **Time Saved** - Automation time savings vs manual
+- **Flaky Tests** - Tests passing after retry (target: 0)
+
+See [metrics/README.md](metrics/README.md) for detailed documentation.
+
+## �🔐 Environment Variables
 See .env.example for required variables
 
 ## 👤 Author
