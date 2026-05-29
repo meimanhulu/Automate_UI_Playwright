@@ -4,15 +4,15 @@ import { defineConfig, devices } from '@playwright/test';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests',        // covers both ./e2e (via project override) and ./tests
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -38,18 +38,39 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // ── QRIS Payment (headed, sequential, extended timeout) ─────────────
+    {
+      name: 'qris-payment',
+      testDir: './tests',
+      testMatch: '**/qris-payment.spec.ts',
+      fullyParallel: false,
+      workers: 1,
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: false,
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+        actionTimeout: 15_000,
+      },
+      timeout: 240_000,
+    },
+
+    // ── Standard browser projects (existing tests) ──────────────────────
     {
       name: 'chromium',
+      testDir: './e2e',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      testDir: './e2e',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      testDir: './e2e',
       use: { ...devices['Desktop Safari'] },
     },
 
