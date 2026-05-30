@@ -38,7 +38,8 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // ── QRIS Payment (headed, sequential, extended timeout) ─────────────
+    // ── QRIS Payment — Default (Chrome) ────────────────────────────────
+    // Run: npx playwright test --project=qris-payment
     {
       name: 'qris-payment',
       testDir: './tests',
@@ -48,14 +49,87 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         headless: false,
-        screenshot: 'only-on-failure',
+        screenshot: 'on',
         video: 'retain-on-failure',
         actionTimeout: 15_000,
       },
       timeout: 240_000,
     },
 
-    // ── Standard browser projects (existing tests) ──────────────────────
+    // ── QRIS Payment — Chrome ───────────────────────────────────────────
+    // Run: npx playwright test --project=qris-payment-chrome
+    {
+      name: 'qris-payment-chrome',
+      testDir: './tests',
+      testMatch: '**/qris-payment.spec.ts',
+      fullyParallel: false,
+      workers: 1,
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: false,
+        screenshot: 'on',
+        video: 'retain-on-failure',
+        actionTimeout: 15_000,
+      },
+      timeout: 240_000,
+    },
+
+    // ── QRIS Payment — Firefox ──────────────────────────────────────────
+    // Run: npx playwright test --project=qris-payment-firefox
+    {
+      name: 'qris-payment-firefox',
+      testDir: './tests',
+      testMatch: '**/qris-payment.spec.ts',
+      fullyParallel: false,
+      workers: 1,
+      use: {
+        ...devices['Desktop Firefox'],
+        headless: false,
+        screenshot: 'on',
+        video: 'retain-on-failure',
+        actionTimeout: 15_000,
+      },
+      timeout: 240_000,
+    },
+
+    // ── QRIS Payment — Microsoft Edge ───────────────────────────────────
+    // Run: npx playwright test --project=qris-payment-edge
+    {
+      name: 'qris-payment-edge',
+      testDir: './tests',
+      testMatch: '**/qris-payment.spec.ts',
+      fullyParallel: false,
+      workers: 1,
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge',
+        headless: false,
+        screenshot: 'on',
+        video: 'retain-on-failure',
+        actionTimeout: 15_000,
+      },
+      timeout: 240_000,
+    },
+
+    // ── QRIS Payment — WebKit (Safari engine) ───────────────────────────
+    // Run: npx playwright test --project=qris-payment-webkit
+    {
+      name: 'qris-payment-webkit',
+      testDir: './tests',
+      testMatch: '**/qris-payment.spec.ts',
+      fullyParallel: false,
+      workers: 1,
+      use: {
+        ...devices['Desktop Safari'],
+        headless: false,
+        screenshot: 'on',
+        video: 'retain-on-failure',
+        actionTimeout: 15_000,
+      },
+      timeout: 240_000,
+    },
+
+    // ── Standard browser projects (existing e2e tests) ──────────────────
     {
       name: 'chromium',
       testDir: './e2e',
@@ -73,32 +147,5 @@ export default defineConfig({
       testDir: './e2e',
       use: { ...devices['Desktop Safari'] },
     },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });

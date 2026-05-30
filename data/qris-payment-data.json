@@ -1,44 +1,37 @@
 [
   {
-    "namaPembeli": "Budi Santoso",
-    "emailPembeli": "budi@example.com",
+    "namaPembeli": "Budi Sandiago",
+    "emailPembeli": "budi21@example.com",
     "namaItem": "Paket Premium 1 Bulan",
-    "jumlah": "12000",
+    "jumlah": "19000",
     "catatan": "Automated payment 1"
   },
   {
-    "namaPembeli": "Dewi Lestari",
-    "emailPembeli": "dewi@example.com",
+    "namaPembeli": "Dewi Lesi",
+    "emailPembeli": "dewi12@example.com",
     "namaItem": "Paket Standar 1 Bulan",
-    "jumlah": "19000",
+    "jumlah": "12000",
     "catatan": "Automated payment 2"
   },
   {
-    "namaPembeli": "Andi Wijaya",
-    "emailPembeli": "andi@example.com",
+    "namaPembeli": "Andi Wiwik",
+    "emailPembeli": "andicobra@example.com",
     "namaItem": "Paket Basic 1 Bulan",
-    "jumlah": "15000",
+    "jumlah": "13000",
     "catatan": "Automated payment 3"
   },
   {
-    "namaPembeli": "Aufa Shidiq",
-    "emailPembeli": "shid@example.com",
-    "namaItem": "Paket Basic 1 Bulan",
-    "jumlah": "13000",
-    "catatan": "Automated payment 4"
-  },
-  {
-    "namaPembeli": "Dewa trims",
-    "emailPembeli": "trims@example.com",
+    "namaPembeli": "Ari Wiwik",
+    "emailPembeli": "aril@example.com",
     "namaItem": "Paket Basic 1 Bulan",
     "jumlah": "17000",
-    "catatan": "Automated payment 5"
+    "catatan": "Automated payment 3"
   },
   {
-    "namaPembeli": "Jordan Lie",
-    "emailPembeli": "lie@example.com",
+    "namaPembeli": "uril onah",
+    "emailPembeli": "onana@example.com",
     "namaItem": "Paket Basic 1 Bulan",
-    "jumlah": "19000",
-    "catatan": "Automated payment 6"
+    "jumlah": "11000",
+    "catatan": "Automated payment 3"
   }
 ]

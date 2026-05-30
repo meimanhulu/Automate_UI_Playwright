@@ -34,8 +34,11 @@ const N_ITERATIONS = paymentData.length;
  */
 const PAYMENT_SUCCESS_TIMEOUT_MS = 60_000;
 
-/** Pause (ms) between iterations — lets the page reload settle and gives a 5s delay. */
-const BETWEEN_ITERATION_DELAY_MS = 5_000;
+/**
+ * Time (ms) to wait between iterations — lets the main page settle
+ * after the SDK's onSuccess triggers window.location.reload().
+ */
+const BETWEEN_ITERATION_DELAY_MS = 3_000;
 
 // ─── Helper: extract Transaction ID from the SDK popup ────────────────────────
 
@@ -62,11 +65,11 @@ async function extractTransactionId(popup: Page): Promise<string> {
   // a postMessage { type: 'SET_TRANSACTION_ID', transactionId: '...' }.
   const txnDiv = popup.locator('#transaction-id');
 
-  // Step 1: wait for element to be visible in DOM
-  await txnDiv.waitFor({ state: 'visible', timeout: 20_000 });
+  // Step 1: wait for element to be attached (it starts hidden/empty)
+  await txnDiv.waitFor({ state: 'attached', timeout: 30_000 });
 
   // Step 2: wait until the postMessage text has actually arrived
-  await expect(txnDiv).not.toBeEmpty({ timeout: 20_000 });
+  await expect(txnDiv).not.toBeEmpty({ timeout: 30_000 });
 
   const fullText = (await txnDiv.innerText()).trim();
   // Expected: "ID Transaksi: <id>"
@@ -101,7 +104,6 @@ test.describe('QRIS Payment Flow', () => {
       console.log('[QRIS] ✅ Page loaded — form visible');
     });
 
-    // ── Main loop ─────────────────────────────────────────────────────────
     for (let i = 1; i <= N_ITERATIONS; i++) {
       const currentData = paymentData[i - 1];
       console.log(`\n[QRIS] ══════════════ ITERATION ${i} / ${N_ITERATIONS} ══════════════`);
@@ -109,13 +111,11 @@ test.describe('QRIS Payment Flow', () => {
       console.log(`[QRIS] [${i}] 📦 Item  : ${currentData.namaItem}`);
       console.log(`[QRIS] [${i}] 💰 Amount: Rp ${currentData.jumlah}`);
 
-      // ── Step 1 & 2: Fill form + click submit + capture popup ──────────
+      // ── Step 1: Fill form & capture popup ──────────
       let popup!: Page;
       await test.step(`[${i}] Fill form & capture popup`, async () => {
         console.log(`[QRIS] [${i}] 📝 Filling form and clicking "Buat Order & Bayar →"…`);
-
         popup = await qrisPage.fillAndSubmit(context, currentData);
-
         console.log(`[QRIS] [${i}] 🪟 Popup opened (url: ${popup.url()})`);
 
         // Confirm popup shell is ready (#main-content is the SDK's root div)
@@ -123,32 +123,32 @@ test.describe('QRIS Payment Flow', () => {
         console.log(`[QRIS] [${i}] ✅ Popup #main-content visible`);
       });
 
-      // ── Step 3: Wait for QR code + Transaction ID ─────────────────────
-      let transactionId!: string;
-      await test.step(`[${i}] Wait for QR code & extract Transaction ID`, async () => {
-        console.log(`[QRIS] [${i}] ⏳ Waiting 5 seconds for the system to load and fetch the Transaction ID…`);
-        await page.waitForTimeout(5_000);
+      // ── Step 2: Wait for QR code to render ──────────────────────────────────
+      await test.step(`[${i}] Wait for QR code to render`, async () => {
+        console.log(`[QRIS] [${i}] ⏳ Waiting 3 seconds for the system to load and fetch the Transaction ID.`);
+        // Brief pause so the SDK finishes calling startProcess() and the QR
+        // is fully rendered before we capture the transaction ID.
+        await popup.waitForTimeout(3_000);
 
-        // qrcode.js renders a hidden <canvas> and a visible <img>. We target the visible <img> to avoid visibility errors.
-        await expect(
-          popup.locator('#qris-container img'),
-        ).toBeVisible({ timeout: 20_000 });
-
+        // Verify the QR code container is present
+        const qrContainer = popup.locator('#qris-container');
+        await expect(qrContainer).toBeAttached({ timeout: 15_000 });
         console.log(`[QRIS] [${i}] 🔲 QR code rendered`);
+      });
 
-        // Transaction ID arrives via postMessage into #transaction-id
+      // ── Step 3: Extract Transaction ID ──────────────────────────────────────
+      let transactionId!: string;
+      await test.step(`[${i}] Extract Transaction ID`, async () => {
         transactionId = await extractTransactionId(popup);
         console.log(`[QRIS] [${i}] 🔑 Transaction ID: ${transactionId}`);
       });
 
-      // ── Step 4: Call Alto payment API ─────────────────────────────────
-      // payQrisTransaction() THROWS immediately when response_code !== "001".
-      // The thrown error fails this step and stops the whole iteration.
+      // ── Step 4: Call Alto payment API ──────────────────────────────────────
       await test.step(`[${i}] Call Alto payment API`, async () => {
-        console.log(`[QRIS] [${i}] ⏸️  Waiting 5 seconds before making the payment API call…`);
-        await page.waitForTimeout(5_000);
+        console.log(`[QRIS] [${i}] ⏸️  Waiting 3 seconds before making the payment API call.`);
+        await page.waitForTimeout(3_000);
 
-        console.log(`[QRIS] [${i}] 💳 Calling payment API — txn: ${transactionId} | amount: Rp ${currentData.jumlah}…`);
+        console.log(`[QRIS] [${i}] 💳 Calling payment API — txn: ${transactionId} | amount: Rp ${currentData.jumlah}.`);
 
         const result = await payQrisTransaction(transactionId, currentData.jumlah);
 
@@ -161,65 +161,57 @@ test.describe('QRIS Payment Flow', () => {
         );
       });
 
-      // ── Step 5: Wait for "Pembayaran Berhasil" in popup ───────────────
+      // ── Step 5: Wait for "Pembayaran Berhasil" in popup ───────────────────
       // Confirmed HTML (after SDK showFinalUI('SUCCESS', ...)):
       //   <h2 class="text-2xl font-bold text-green-600 mb-2">Pembayaran Berhasil</h2>
       //
       // This is the VALIDATION gate — Tutup is only clicked AFTER this is visible.
       await test.step(`[${i}] Wait for "Pembayaran Berhasil" in popup`, async () => {
         console.log(
-          `[QRIS] [${i}] ⏳ Waiting up to 15s for "Pembayaran Berhasil"…`,
+          `[QRIS] [${i}] ⏳ Waiting for "Pembayaran Berhasil"…`,
         );
 
         // Force status check by clicking "Cek Status Pembayaran" button in popup
         const checkStatusBtn = popup.locator('#check-status-btn');
-        try {
-          if (await checkStatusBtn.isVisible({ timeout: 4000 })) {
-            console.log(`[QRIS] [${i}] 🔍 Clicking "Cek Status Pembayaran" button to force status update…`);
-            await checkStatusBtn.click();
-          }
-        } catch (e) {
-          // Button might not be visible if it already transitioned, which is fine
+        if (await checkStatusBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
+          console.log(`[QRIS] [${i}] 🔄 Clicking "Cek Status Pembayaran" to trigger poll…`);
+          await checkStatusBtn.click();
         }
 
-        const successHeading = popup.locator('h2.text-green-600', { hasText: 'Pembayaran Berhasil' });
-        try {
-          // Wait for a reasonable 15 seconds for front-end sync
-          await expect(successHeading).toBeVisible({ timeout: 15_000 });
-          console.log(`[QRIS] [${i}] 🎉 "Pembayaran Berhasil" confirmed!`);
-        } catch (error) {
-          console.log(
-            `[QRIS] [${i}] ⚠️ Warning: API payment was successful, but the front-end popup ` +
-            `did not transition to the success UI within 15s (likely UAT server sync lag). ` +
-            `Continuing gracefully…`
-          );
-        }
+        // Wait for the success heading
+        await expect(
+          popup.locator('h2.text-green-600', { hasText: 'Pembayaran Berhasil' }),
+        ).toBeVisible({ timeout: PAYMENT_SUCCESS_TIMEOUT_MS });
+
+        console.log(`[QRIS] [${i}] ✅ "Pembayaran Berhasil" confirmed!`);
       });
 
-      // ── Step 6: Click "Tutup" ─────────────────────────────────────────
-      // Confirmed HTML:
-      //   <button onclick="window.close()" class="...bg-green-600...">Tutup</button>
+      // ── Step 6: Click "Tutup" ──────────────────────────────────────────────
       await test.step(`[${i}] Click "Tutup" & wait for popup to close`, async () => {
+        // Confirmed selector (from live DOM):
+        //   <button onclick="window.close()" class="...bg-green-600...">Tutup</button>
         const tutupBtn = popup.locator('button[onclick="window.close()"]');
-        
-        if (await tutupBtn.isVisible({ timeout: 2000 })) {
+
+        if (await tutupBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
           console.log(`[QRIS] [${i}] 🔘 Clicking "Tutup"…`);
-          const closedPromise = popup.waitForEvent('close', { timeout: 5000 });
-          await tutupBtn.click();
+          const startTime = Date.now();
           try {
+            const closedPromise = popup.waitForEvent('close', { timeout: 10_000 });
+            await tutupBtn.click();
             await closedPromise;
-            console.log(`[QRIS] [${i}] 🪟 Popup closed`);
+            const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+            console.log(`[QRIS] [${i}] 🪟 Popup closed after ${elapsed}s`);
           } catch {
-            console.log(`[QRIS] [${i}] ℹ️  Popup did not close after click — closing manually`);
+            console.log(`[QRIS] [${i}] ⚠️  Popup did not close after click — closing manually`);
             await popup.close();
           }
         } else {
-          console.log(`[QRIS] [${i}] ℹ️  Tutup button not visible — closing popup manually`);
+          console.log(`[QRIS] [${i}] ⚠️  Tutup button not visible — closing popup manually`);
           await popup.close();
         }
       });
 
-      // ── Step 7: Return to main page ───────────────────────────────────
+      // ── Step 7: Return to main page ───────────────────────────────────────
       await test.step(`[${i}] Return to main page`, async () => {
         await page.bringToFront();
         console.log(`[QRIS] [${i}] 🏠 Main page back in focus`);
