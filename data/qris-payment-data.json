@@ -19,19 +19,5 @@
     "namaItem": "Paket Basic 1 Bulan",
     "jumlah": "13000",
     "catatan": "Automated payment 3"
-  },
-  {
-    "namaPembeli": "Ari Wiwik",
-    "emailPembeli": "aril@example.com",
-    "namaItem": "Paket Basic 1 Bulan",
-    "jumlah": "17000",
-    "catatan": "Automated payment 3"
-  },
-  {
-    "namaPembeli": "uril onah",
-    "emailPembeli": "onana@example.com",
-    "namaItem": "Paket Basic 1 Bulan",
-    "jumlah": "11000",
-    "catatan": "Automated payment 3"
   }
 ]

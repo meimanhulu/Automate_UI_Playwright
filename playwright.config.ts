@@ -70,6 +70,15 @@ export default defineConfig({
         screenshot: 'on',
         video: 'retain-on-failure',
         actionTimeout: 15_000,
+        // Disable background tab throttling so SDK polling works
+        // even when another browser window is in the foreground.
+        launchOptions: {
+          args: [
+            '--disable-background-timer-throttling',
+            '--disable-renderer-backgrounding',
+            '--disable-backgrounding-occluded-windows',
+          ],
+        },
       },
       timeout: 240_000,
     },
@@ -88,6 +97,14 @@ export default defineConfig({
         screenshot: 'on',
         video: 'retain-on-failure',
         actionTimeout: 15_000,
+        // Disable Firefox background timer throttling via about:config prefs
+        launchOptions: {
+          firefoxUserPrefs: {
+            'dom.min_background_timeout_value': 4,
+            'dom.timeout.background_budget_regeneration_rate': 100,
+            'dom.min_background_timeout_value_without_budget_throttling': 4,
+          },
+        },
       },
       timeout: 240_000,
     },
@@ -107,6 +124,14 @@ export default defineConfig({
         screenshot: 'on',
         video: 'retain-on-failure',
         actionTimeout: 15_000,
+        // Disable background tab throttling — same flags as Chrome (Edge is Chromium-based)
+        launchOptions: {
+          args: [
+            '--disable-background-timer-throttling',
+            '--disable-renderer-backgrounding',
+            '--disable-backgrounding-occluded-windows',
+          ],
+        },
       },
       timeout: 240_000,
     },

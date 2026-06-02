@@ -125,6 +125,9 @@ test.describe('QRIS Payment Flow', () => {
 
       // ── Step 2: Wait for QR code to render ──────────────────────────────────
       await test.step(`[${i}] Wait for QR code to render`, async () => {
+        // Bring popup to front so its JS timers are NOT throttled
+        // while other browser windows are open in parallel.
+        await popup.bringToFront();
         console.log(`[QRIS] [${i}] ⏳ Waiting 3 seconds for the system to load and fetch the Transaction ID.`);
         // Brief pause so the SDK finishes calling startProcess() and the QR
         // is fully rendered before we capture the transaction ID.
@@ -162,28 +165,30 @@ test.describe('QRIS Payment Flow', () => {
       });
 
       // ── Step 5: Wait for "Pembayaran Berhasil" in popup ───────────────────
-      // Confirmed HTML (after SDK showFinalUI('SUCCESS', ...)):
-      //   <h2 class="text-2xl font-bold text-green-600 mb-2">Pembayaran Berhasil</h2>
-      //
-      // This is the VALIDATION gate — Tutup is only clicked AFTER this is visible.
+      // ⚠️  DO NOT click "#check-status-btn" manually here.
+      //     The SDK has its own internal polling that updates the UI automatically.
+      //     Clicking it before the payment has fully propagated through the backend
+      //     triggers the "Belum melakukan pembayaran" error banner and breaks the flow.
+      //     We just wait for the SDK to do its job within PAYMENT_SUCCESS_TIMEOUT_MS.
       await test.step(`[${i}] Wait for "Pembayaran Berhasil" in popup`, async () => {
-        console.log(
-          `[QRIS] [${i}] ⏳ Waiting for "Pembayaran Berhasil"…`,
-        );
+        // Keep the popup window in focus so its JS polling timers
+        // are NOT throttled by the OS/browser while running multi-browser.
+        await popup.bringToFront();
 
-        // Force status check by clicking "Cek Status Pembayaran" button in popup
-        const checkStatusBtn = popup.locator('#check-status-btn');
-        if (await checkStatusBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
-          console.log(`[QRIS] [${i}] 🔄 Clicking "Cek Status Pembayaran" to trigger poll…`);
-          await checkStatusBtn.click();
-        }
+        // Record start time — so we can log EXACTLY how many seconds the SDK
+        // took per browser. This replaces any fixed sleep and makes timing visible.
+        const startTime = Date.now();
+        console.log(`[QRIS] [${i}] ⏳ Waiting dynamically for SDK to detect payment & show "Pembayaran Berhasil"…`);
 
-        // Wait for the success heading
+        // Wait for the success heading — the SDK polls /check-status/<id> internally.
+        // This resolves the INSTANT the element appears — no fixed sleep.
+        // Maximum wait: PAYMENT_SUCCESS_TIMEOUT_MS (60s).
         await expect(
           popup.locator('h2.text-green-600', { hasText: 'Pembayaran Berhasil' }),
         ).toBeVisible({ timeout: PAYMENT_SUCCESS_TIMEOUT_MS });
 
-        console.log(`[QRIS] [${i}] ✅ "Pembayaran Berhasil" confirmed!`);
+        const elapsedSec = ((Date.now() - startTime) / 1000).toFixed(2);
+        console.log(`[QRIS] [${i}] ✅ "Pembayaran Berhasil" confirmed! SDK responded dynamically in ${elapsedSec}s`);
       });
 
       // ── Step 6: Click "Tutup" ──────────────────────────────────────────────
