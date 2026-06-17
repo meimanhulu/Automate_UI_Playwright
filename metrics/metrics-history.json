@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "runId": "run_20260616_201305",
+    "date": "16/06/2026",
+    "timestamp": "20260616_201305",
+    "totalTests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "passRate": 100,
+    "execMin": 1.71,
+    "reportPath": "results/reports/run_20260616_201305/report.md"
+  }
+]
