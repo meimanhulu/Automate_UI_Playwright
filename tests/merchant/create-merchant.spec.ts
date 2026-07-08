@@ -24,7 +24,7 @@
  *  - 2 retries on CI, 0 on local
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/auth.fixture';
 import { MerchantListPage } from '../../pages/merchant/MerchantListPage';
 import { MerchantFormPage } from '../../pages/merchant/MerchantFormPage';
 import { generateMid, attachTestMetadata, attachScreenshot } from '../../utils/test-helper';

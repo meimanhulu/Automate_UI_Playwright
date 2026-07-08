@@ -11,13 +11,13 @@ export const QRGenerateSelector = {
   resetButton: 'button:text("Reset")',
   downloadButton: 'button:text("Download")',
 
-  qrImage: '[data-testid="qr-image"]',
+  qrImage: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
   qrCanvas: 'canvas.qr-code',
-  qrContent: '[data-testid="qr-content"]',
-  referenceNo: '[data-testid="reference-no"]',
-  merchantNameText: '[data-testid="merchant-name"]',
+  qrContent: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
+  referenceNo: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
+  merchantNameText: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
 
-  successMessage: '[data-testid="success-message"]',
-  errorMessage: '[data-testid="error-message"]',
+  successMessage: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
+  errorMessage: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
   loadingSpinner: '.qr-loading',
 } as const;

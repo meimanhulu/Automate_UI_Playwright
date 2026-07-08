@@ -104,16 +104,26 @@ test.describe('QRIS Payment Flow', () => {
       console.log('[QRIS] ✅ Page loaded — form visible');
     });
 
+    interface ActiveTransaction {
+      i: number;
+      data: any;
+      popup: Page;
+      transactionId: string;
+    }
+    const activeTransactions: ActiveTransaction[] = [];
+
+    // ── Phase 1: Batch Generation ─────────────────────────────────────────────
     for (let i = 1; i <= N_ITERATIONS; i++) {
       const currentData = paymentData[i - 1];
-      console.log(`\n[QRIS] ══════════════ ITERATION ${i} / ${N_ITERATIONS} ══════════════`);
+      console.log(`\n[QRIS] ════════ PHASE 1: GENERATION - ITERATION ${i} / ${N_ITERATIONS} ════════`);
       console.log(`[QRIS] [${i}] 👤 Buyer : ${currentData.namaPembeli}`);
       console.log(`[QRIS] [${i}] 📦 Item  : ${currentData.namaItem}`);
       console.log(`[QRIS] [${i}] 💰 Amount: Rp ${currentData.jumlah}`);
 
       // ── Step 1: Fill form & capture popup ──────────
       let popup!: Page;
-      await test.step(`[${i}] Fill form & capture popup`, async () => {
+      await test.step(`[${i}] Phase 1: Fill form & capture popup`, async () => {
+        await page.bringToFront();
         console.log(`[QRIS] [${i}] 📝 Filling form and clicking "Buat Order & Bayar →"…`);
         popup = await qrisPage.fillAndSubmit(context, currentData);
         console.log(`[QRIS] [${i}] 🪟 Popup opened (url: ${popup.url()})`);
@@ -124,7 +134,7 @@ test.describe('QRIS Payment Flow', () => {
       });
 
       // ── Step 2: Wait for QR code to render ──────────────────────────────────
-      await test.step(`[${i}] Wait for QR code to render`, async () => {
+      await test.step(`[${i}] Phase 1: Wait for QR code to render`, async () => {
         // Bring popup to front so its JS timers are NOT throttled
         // while other browser windows are open in parallel.
         await popup.bringToFront();
@@ -134,20 +144,42 @@ test.describe('QRIS Payment Flow', () => {
         await popup.waitForTimeout(3_000);
 
         // Verify the QR code container is present
-        const qrContainer = popup.locator('#qris-container');
+        const qrContainer = popup.locator('#qris-container img, #qris-container canvas').first();
         await expect(qrContainer).toBeAttached({ timeout: 15_000 });
         console.log(`[QRIS] [${i}] 🔲 QR code rendered`);
       });
 
       // ── Step 3: Extract Transaction ID ──────────────────────────────────────
       let transactionId!: string;
-      await test.step(`[${i}] Extract Transaction ID`, async () => {
+      await test.step(`[${i}] Phase 1: Extract Transaction ID`, async () => {
         transactionId = await extractTransactionId(popup);
         console.log(`[QRIS] [${i}] 🔑 Transaction ID: ${transactionId}`);
       });
 
+      activeTransactions.push({ i, data: currentData, popup, transactionId });
+
+      // Return to main page for the next generation iteration
+      if (i < N_ITERATIONS) {
+        await test.step(`[${i}] Phase 1: Return to main page`, async () => {
+          await page.bringToFront();
+          console.log(`[QRIS] [${i}] 🏠 Main page back in focus`);
+          await expect(page.locator('h1', { hasText: 'QRIS Payment' })).toBeVisible({ timeout: 10_000 });
+          
+          console.log(`[QRIS] [${i}] ⏸️  Waiting ${BETWEEN_ITERATION_DELAY_MS}ms before generating next QR…`);
+          await page.waitForTimeout(BETWEEN_ITERATION_DELAY_MS);
+          
+          await qrisPage.waitForForm();
+        });
+      }
+    }
+
+    // ── Phase 2: Batch Payment ────────────────────────────────────────────────
+    for (const txn of activeTransactions) {
+      const { i, data: currentData, popup, transactionId } = txn;
+      console.log(`\n[QRIS] ════════ PHASE 2: PAYMENT - ITERATION ${i} / ${N_ITERATIONS} ════════`);
+
       // ── Step 4: Call Alto payment API ──────────────────────────────────────
-      await test.step(`[${i}] Call Alto payment API`, async () => {
+      await test.step(`[${i}] Phase 2: Call Alto payment API`, async () => {
         console.log(`[QRIS] [${i}] ⏸️  Waiting 3 seconds before making the payment API call.`);
         await page.waitForTimeout(3_000);
 
@@ -160,31 +192,23 @@ test.describe('QRIS Payment Flow', () => {
           `[QRIS] [${i}] ✅ Payment API success — ` +
           `code: ${result.body.response_code} | ` +
           `text: ${result.body.response_text} | ` +
-          `invoice: ${result.body.data?.invoice_no ?? 'N/A'}`,
+          `invoice: ${result.body.data?.invoice_no ?? 'N/A'}`
         );
       });
 
       // ── Step 5: Wait for "Pembayaran Berhasil" in popup ───────────────────
-      // ⚠️  DO NOT click "#check-status-btn" manually here.
-      //     The SDK has its own internal polling that updates the UI automatically.
-      //     Clicking it before the payment has fully propagated through the backend
-      //     triggers the "Belum melakukan pembayaran" error banner and breaks the flow.
-      //     We just wait for the SDK to do its job within PAYMENT_SUCCESS_TIMEOUT_MS.
-      await test.step(`[${i}] Wait for "Pembayaran Berhasil" in popup`, async () => {
+      await test.step(`[${i}] Phase 2: Wait for "Pembayaran Berhasil" in popup`, async () => {
         // Keep the popup window in focus so its JS polling timers
         // are NOT throttled by the OS/browser while running multi-browser.
         await popup.bringToFront();
 
-        // Record start time — so we can log EXACTLY how many seconds the SDK
-        // took per browser. This replaces any fixed sleep and makes timing visible.
+        // Record start time
         const startTime = Date.now();
         console.log(`[QRIS] [${i}] ⏳ Waiting dynamically for SDK to detect payment & show "Pembayaran Berhasil"…`);
 
-        // Wait for the success heading — the SDK polls /check-status/<id> internally.
-        // This resolves the INSTANT the element appears — no fixed sleep.
-        // Maximum wait: PAYMENT_SUCCESS_TIMEOUT_MS (60s).
+        // Wait for the success heading
         await expect(
-          popup.locator('h2.text-green-600', { hasText: 'Pembayaran Berhasil' }),
+          popup.locator('h2.text-green-600', { hasText: 'Pembayaran Berhasil' })
         ).toBeVisible({ timeout: PAYMENT_SUCCESS_TIMEOUT_MS });
 
         const elapsedSec = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -192,9 +216,8 @@ test.describe('QRIS Payment Flow', () => {
       });
 
       // ── Step 6: Click "Tutup" ──────────────────────────────────────────────
-      await test.step(`[${i}] Click "Tutup" & wait for popup to close`, async () => {
+      await test.step(`[${i}] Phase 2: Click "Tutup" & wait for popup to close`, async () => {
         // Confirmed selector (from live DOM):
-        //   <button onclick="window.close()" class="...bg-green-600...">Tutup</button>
         const tutupBtn = popup.locator('button[onclick="window.close()"]');
 
         if (await tutupBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
@@ -217,16 +240,13 @@ test.describe('QRIS Payment Flow', () => {
       });
 
       // ── Step 7: Return to main page ───────────────────────────────────────
-      await test.step(`[${i}] Return to main page`, async () => {
+      await test.step(`[${i}] Phase 2: Return to main page`, async () => {
         await page.bringToFront();
         console.log(`[QRIS] [${i}] 🏠 Main page back in focus`);
 
-        // Validation: confirm we are on the main page by checking the
-        // page heading — <h1>QRIS Payment</h1> — is visible.
-        // This is the definitive signal that the popup has closed and
-        // the browser has returned to the order form page.
+        // Validation: confirm we are on the main page by checking the page heading
         await expect(
-          page.locator('h1', { hasText: 'QRIS Payment' }),
+          page.locator('h1', { hasText: 'QRIS Payment' })
         ).toBeVisible({ timeout: 10_000 });
         console.log(`[QRIS] [${i}] ✅ Back on main page — <h1>QRIS Payment</h1> visible`);
 
@@ -241,7 +261,7 @@ test.describe('QRIS Payment Flow', () => {
         }
       });
 
-      console.log(`[QRIS] [${i}] ✅ Iteration ${i} COMPLETE`);
+      console.log(`[QRIS] [${i}] ✅ Phase 2 Iteration ${i} COMPLETE`);
     }
 
     console.log(`\n[QRIS] 🏁 All ${N_ITERATIONS} iterations completed successfully!`);

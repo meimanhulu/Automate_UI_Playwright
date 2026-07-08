@@ -19,7 +19,7 @@ You are a Senior SDET helping maintain a Playwright UI Automation test suite.
 ## Coding Standards
 
 1. **Always use Page Object Model** — never write locators directly in test files.
-2. **Locator priority**: `getByRole` > `getByLabel` > `getByTestId` > CSS (last resort).
+2. **Locator priority**: `getByRole` > `getByLabel` > `getByText` > `getByPlaceholder` > CSS/XPath (fallback). **Do NOT use `getByTestId` or `data-testid`** because the FE team has not implemented them.
 3. **Every test must have a tag**: `@smoke`, `@regression`, `@positive`, or `@negative`.
 4. **Every test must have a TC ID** in the title.
    - Example: `[TC-012] Tambah merchant Full Plan berhasil`

@@ -2,7 +2,7 @@
 
 import { test as base, devices } from '@playwright/test';
 import type { Page, BrowserContext } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
+import { LoginLogoutPage } from '../pages/LoginLogoutPage';
 import { DashboardPage } from '../pages/DashboardPage';
 import { QRGeneratePage } from '../pages/QRGeneratePage';
 
@@ -12,7 +12,7 @@ type AllFixtures = {
   mobilePage: Page;
 
   // ── Pages (POM) ──
-  loginPage: LoginPage;
+  loginLogoutPage: LoginLogoutPage;
   dashboardPage: DashboardPage;
   qrGeneratePage: QRGeneratePage;
 
@@ -40,8 +40,8 @@ export const test = base.extend<AllFixtures>({
   },
 
   // ── Page Objects ──
-  loginPage: async ({ mobilePage }, use) => {
-    await use(new LoginPage(mobilePage));
+  loginLogoutPage: async ({ mobilePage }, use) => {
+    await use(new LoginLogoutPage(mobilePage));
   },
 
   dashboardPage: async ({ mobilePage }, use) => {
@@ -55,13 +55,13 @@ export const test = base.extend<AllFixtures>({
   // ── Logged In Mobile Page ──
   loggedInMobilePage: async ({ mobileContext }, use) => {
     const page = await mobileContext.newPage();
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login(
+    const loginLogoutPage = new LoginLogoutPage(page);
+    await loginLogoutPage.goto();
+    await loginLogoutPage.login(
       process.env.TEST_EMAIL || 'merchant@test.com',
       process.env.TEST_PASSWORD || 'password123',
     );
-    await loginPage.expectLoginSuccess();
+    await loginLogoutPage.expectLoginSuccess();
     await use(page);
     await page.close();
   },

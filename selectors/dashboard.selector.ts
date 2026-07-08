@@ -1,11 +1,11 @@
 export const DashboardSelector = {
-  dashboardContainer: '[data-testid="dashboard-page"]',
+  dashboardContainer: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
 
-  menuIcon: '[data-testid="menu-icon"]',
-  navMenu: '[data-testid="nav-menu"]',
+  menuIcon: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
+  navMenu: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
   generateQRLink: 'text=Generate QR',
   transactionLink: 'text=Transactions',
 
-  merchantName: '[data-testid="merchant-name"]',
-  balanceAmount: '[data-testid="balance"]',
+  merchantName: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
+  balanceAmount: '/* GANTI DGN CSS/XPATH (FE tidak pakai test-id) */',
 } as const;
