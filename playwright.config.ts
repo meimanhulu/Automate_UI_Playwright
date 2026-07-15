@@ -34,6 +34,20 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Maximize browser window globally */
+    viewport: null,
+    launchOptions: {
+      args: [
+        '--start-maximized',
+        '--force-device-scale-factor=0.70'
+      ],
+      slowMo: 1500
+    },
+
+    /* Fix #1: Grant permissions to avoid 'Failed to store the permission' errors */
+    permissions: ['notifications', 'clipboard-read', 'clipboard-write'],
+    storageState: undefined,
   },
 
   /* Configure projects for major browsers */
@@ -157,19 +171,24 @@ export default defineConfig({
     // ── Standard browser projects (existing e2e tests) ──────────────────
     {
       name: 'chromium',
-      testDir: './e2e',
-      use: { ...devices['Desktop Chrome'] },
+      testDir: './tests',
+      use: {
+        viewport: null,
+        launchOptions: {
+          args: ['--start-maximized']
+        }
+      },
     },
 
     {
       name: 'firefox',
-      testDir: './e2e',
+      testDir: './tests',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
-      testDir: './e2e',
+      testDir: './tests',
       use: { ...devices['Desktop Safari'] },
     },
   ],

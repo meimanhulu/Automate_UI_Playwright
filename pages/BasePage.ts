@@ -9,19 +9,9 @@ export class BasePage {
     await this.page.goto(path);
   }
 
-  async screenshot(name: string): Promise<void> {
-    await this.page.screenshot({
-      path: `results/screenshots/${name}.png`,
-      fullPage: true,
-    });
-  }
-
   async waitForLoading(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
-  }
-
-  async getText(selector: string): Promise<string> {
-    const el = this.page.locator(selector);
-    return (await el.textContent()) || '';
+    // Hindari menggunakan 'networkidle' karena sering menyebabkan flaky test di SPA/VueJS
+    // Tunggu hingga elemen loading spinner (jika ada) menghilang dari layar
+    await this.page.locator('.loading-spinner').waitFor({ state: 'hidden', timeout: 10_000 }).catch(() => {});
   }
 }

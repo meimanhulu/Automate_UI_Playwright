@@ -2,16 +2,11 @@ export const MerchantListSelector = {
 
   // ── Page Heading ───────────────────────────────────────────────────────────
   /** Heading "Merchant" di atas halaman */
-  pageHeading: '',                      // contoh: 'h1:has-text("Merchant")'
-  // atau   : '.page-title:has-text("Merchant")'
-
+  pageHeading: 'h1:has-text("Merchant")',
   // ── Table / Data ───────────────────────────────────────────────────────────
   /** Kontainer tabel merchant */
-  tableContainer: '',                   // contoh: '#id' atau '.class' atau '[name="..."]'
-  // atau   : 'table.merchant-list'
-
-  /** Baris data dalam tabel — gunakan .nth(n) atau .filter() di POM */
-  tableRow: '',                         // contoh: 'tbody tr'
+  tableContainer: 'table',
+  tableRow: 'table tbody > tr',                         // contoh: 'tbody tr'
 
   // Kolom header tabel (untuk verifikasi tampilan)
   /** Header kolom "NAME" */

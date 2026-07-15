@@ -5,9 +5,9 @@ export const LoginLogoutSelector = {
   submitButton     : 'button:has-text("Login")',
 
   // ── Logout / Header ──
+  // btnProfile biasanya tidak punya aria-label eksplisit, tapi bisa discoped secara spesifik
   btnProfile       : 'button:has(span.font-medium)',
-  btnLogout        : 'button:has-text("Log Out")',
-
-  // ── Loading ──
-  spinner          : '.loading-spinner', // Keep as fallback if needed
+  
+  // Dihapus 'button:has-text("Log Out")' karena memicu strict mode violation
+  // Locator untuk logout akan ditangani langsung di Page Object menggunakan getByRole + scoping
 } as const;

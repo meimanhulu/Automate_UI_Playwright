@@ -29,8 +29,8 @@
  */
 
 import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { TenantSidebarSelector as S } from '../selectors/tenant/tenant-sidebar.selector';
+import { BasePage } from '../BasePage';
+import { TenantSidebarSelector as S } from '../../selectors/tenant/tenant-sidebar.selector';
 
 // ── Tipe sub-menu Tenant ───────────────────────────────────────────────────────
 export type TenantSubMenu =
@@ -118,6 +118,8 @@ export class TenantSidebarPage extends BasePage {
     await this.expectSubMenuMerchantVisible();
     await this.subMenuMerchant.click();
     await this.waitForLoading();
+    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual
+    await this.page.waitForTimeout(2500);
   }
 
   /**
@@ -127,6 +129,8 @@ export class TenantSidebarPage extends BasePage {
     await this.expandTenantMenu();
     await this.subMenuAggregate.click();
     await this.waitForLoading();
+    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual
+    await this.page.waitForTimeout(2500);
   }
 
   /**
@@ -136,6 +140,8 @@ export class TenantSidebarPage extends BasePage {
     await this.expandTenantMenu();
     await this.subMenuAccountRecipient.click();
     await this.waitForLoading();
+    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual
+    await this.page.waitForTimeout(2500);
   }
 
   /**
@@ -145,6 +151,8 @@ export class TenantSidebarPage extends BasePage {
     await this.expandTenantMenu();
     await this.subMenuMerchantAccount.click();
     await this.waitForLoading();
+    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual
+    await this.page.waitForTimeout(2500);
   }
 
   /**

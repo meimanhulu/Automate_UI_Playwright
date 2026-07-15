@@ -34,7 +34,7 @@
  */
 
 import { test, expect }                from '../../fixtures/auth.fixture';
-import { TenantSidebarPage }           from '../../pages/TenantSidebarPage';
+import { TenantSidebarPage }           from '../../pages/tenant/TenantSidebarPage';
 import { MerchantListPage }            from '../../pages/merchant/MerchantListPage';
 import { MerchantAddFormPage }         from '../../pages/merchant/MerchantAddFormPage';
 import { PaymentNetworkFormPage }      from '../../pages/merchant/PaymentNetworkFormPage';

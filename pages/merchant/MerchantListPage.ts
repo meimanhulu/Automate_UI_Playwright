@@ -20,7 +20,7 @@
 
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import { TenantSidebarPage } from '../TenantSidebarPage';
+import { TenantSidebarPage } from '../tenant/TenantSidebarPage';
 import { MerchantListSelector as S } from '../../selectors/merchant/merchant-list.selector';
 
 export class MerchantListPage extends BasePage {
