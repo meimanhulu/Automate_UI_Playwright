@@ -33,7 +33,7 @@
  *   ✅ Tag @smoke, @regression, @positive, @negative
  */
 
-import { test, expect }                from '../../fixtures/auth.fixture';
+import { test, expect }                from '../../fixtures/tenant-framework.fixture';
 import { TenantSidebarPage }           from '../../pages/tenant/TenantSidebarPage';
 import { MerchantListPage }            from '../../pages/merchant/MerchantListPage';
 import { MerchantAddFormPage }         from '../../pages/merchant/MerchantAddFormPage';

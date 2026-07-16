@@ -74,14 +74,14 @@ export class QRGeneratePage extends BasePage {
   }
 
   async getReferenceNo(): Promise<string> {
-    return this.getText(S.referenceNo);
+    return (await this.page.locator(S.referenceNo).textContent()) || '';
   }
 
   async getMerchantName(): Promise<string> {
-    return this.getText(S.merchantNameText);
+    return (await this.page.locator(S.merchantNameText).textContent()) || '';
   }
 
   async getQRContent(): Promise<string> {
-    return this.getText(S.qrContent);
+    return (await this.page.locator(S.qrContent).textContent()) || '';
   }
 }

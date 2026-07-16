@@ -17,6 +17,7 @@
     "selectors/**/*.ts",
     "fixtures/**/*.ts",
     "utils/**/*.ts",
+    "reporters/**/*.ts",
     "data/**/*.json"
   ]
 }

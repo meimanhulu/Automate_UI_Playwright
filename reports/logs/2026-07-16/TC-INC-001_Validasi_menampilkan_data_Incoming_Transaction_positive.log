@@ -1,0 +1,34 @@
+────────────────────────────────────────────────────────────
+[10:30:47.162] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-001] Validasi menampilkan data Incoming Transaction @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-001
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:30:47.167] [STEP 1] Validate Incoming Transaction page loaded
+[10:30:47.195] [PASS] Incoming Transaction page displayed
+[10:30:47.196] [STEP 2] Validate transaction table visible
+[10:30:47.207] [PASS] Transaction table is visible
+────────────────────────────────────────────────────────────
+[10:30:47.400] EXECUTION FINISHED  ✓ PASSED  (482ms)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:31:23.049] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-001] Validasi menampilkan data Incoming Transaction @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-001
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:31:23.064] [STEP 1] Validate Incoming Transaction page loaded
+[10:31:23.143] [PASS] Incoming Transaction page displayed
+[10:31:23.145] [STEP 2] Validate transaction table visible
+[10:31:23.173] [PASS] Transaction table is visible
+────────────────────────────────────────────────────────────
+[10:31:23.373] EXECUTION FINISHED  ✓ PASSED  (557ms)
+────────────────────────────────────────────────────────────
+

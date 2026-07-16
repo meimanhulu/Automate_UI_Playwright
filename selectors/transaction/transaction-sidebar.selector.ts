@@ -3,8 +3,8 @@ export const TransactionSidebarSelector = {
   menuTransactionExpanded: 'li[role="presentation"]:has(> div p:text-is("Transaction")) button.rotate-180',
   
   // ── Sub-menus ──────────────────────────────────────────────────────────────
-  subMenuIncoming: 'li[role="presentation"]:has(> div p:text-is("Incoming"))',
-  subMenuOutgoing: 'li[role="presentation"]:has(> div p:text-is("Outgoing"))',
+  subMenuIncoming: 'p:text-is("Incoming")',
+  subMenuOutgoing: 'p:text-is("Outgoing")',
 
   // ── Active State Indicator ─────────────────────────────────────────────────
   activeSubMenuIncoming: 'ul li[role="presentation"]:has(p:text-is("Incoming"))',

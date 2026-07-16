@@ -17,15 +17,18 @@ export class TransactionSidebarPage extends BasePage {
   }
 
   async expandTransactionMenu(): Promise<void> {
-    const isExpanded = await this.subMenuIncoming.isVisible().catch(() => false);
-    if (!isExpanded) {
+    const container = this.page.locator('li[role="presentation"]:has(> div p:text-is("Transaction")) > ul');
+    const isCollapsed = await container.evaluate((el) => el.classList.contains('max-h-0')).catch(() => false);
+    
+    if (isCollapsed) {
       await this.menuTransaction.click();
+      await this.page.waitForTimeout(500); // Tunggu animasi expand
     }
   }
 
   async goToIncoming(): Promise<void> {
     await this.expandTransactionMenu();
-    await this.subMenuIncoming.click();
+    await this.subMenuIncoming.click({ force: true });
     await this.waitForLoading();
     // Jeda 2.5 detik untuk memperlambat eksekusi secara visual sesuai permintaan
     await this.page.waitForTimeout(2500);
@@ -33,7 +36,7 @@ export class TransactionSidebarPage extends BasePage {
 
   async goToOutgoing(): Promise<void> {
     await this.expandTransactionMenu();
-    await this.subMenuOutgoing.click();
+    await this.subMenuOutgoing.click({ force: true });
     await this.waitForLoading();
     // Jeda 2.5 detik untuk memperlambat eksekusi secara visual sesuai permintaan
     await this.page.waitForTimeout(2500);
