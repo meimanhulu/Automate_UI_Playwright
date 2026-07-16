@@ -1,69 +1,113 @@
 /**
  * @file ScreenshotHelper.ts
- * @description Screenshot strategy for Playwright tests.
+ * @description Strategic screenshot capture for evidence and debugging.
  *
- * Strategy:
- * - Capture screenshot ONLY on important business milestones (not after every expect).
- * - ALWAYS capture screenshot when a step fails (auto-called in catch blocks).
+ * Senior SDET Standard:
+ * Capture screenshots ONLY at meaningful checkpoints - not after every action.
+ * Screenshots are evidence for stakeholders (dev, product, business, CTO).
  *
- * Business milestone examples:
- *   Login Success | Transaction Loaded | Filter Applied | Export Started
- *   Downloads Opened | Report Ready | Download Completed
+ * Checkpoints include:
+ * - Login success
+ * - Dashboard loaded
+ * - Filter applied
+ * - Export dialog opened
+ * - Download completed
+ * - Critical validation points
  *
- * This avoids screenshot noise in the report while keeping all critical evidence.
- *
- * Internally delegates to `attachScreenshot()` from test-helper.ts — no duplication.
+ * Avoid excessive screenshots - they bloat reports and slow test execution.
  */
 
 import { Page, TestInfo } from '@playwright/test';
-import { attachScreenshot } from './test-helper';
-import { logger } from './ExecutionLogger';
+import { TestLogger } from './Logger';
 
-// ─── Public API ───────────────────────────────────────────────────────────────
-
-/**
- * Capture a screenshot at a business milestone and attach it to the HTML report.
- *
- * Use this sparingly — only for meaningful checkpoints that a developer or QA
- * would want to visually verify later.
- *
- * @param page     - Playwright Page object
- * @param testInfo - Playwright TestInfo (from test context)
- * @param label    - descriptive label shown in the report (e.g. "TC-INC-004_Export_Started")
- *
- * @example
- *   await milestone(page, testInfo, 'TC-INC-004_Export_Started');
- */
-export async function milestone(
-  page:     Page,
-  testInfo: TestInfo,
-  label:    string,
-): Promise<void> {
-  await attachScreenshot(page, testInfo, `📷 ${label}`);
-  logger.info('Screenshot', label);
+export interface ScreenshotOptions {
+  fullPage?: boolean;
+  timeout?: number;
+  logger?: TestLogger;
 }
 
 /**
- * Capture a screenshot when a test step FAILS, then re-throw the error.
- *
- * Usage pattern inside test.step() catch blocks:
- *
- * @example
- *   } catch (err) {
- *     await captureFailure(page, testInfo, 'TC-INC-004_Step3_FAILED', err);
- *   }
+ * Captures a strategic checkpoint screenshot with automatic stabilization.
+ * 
+ * Best practices:
+ * - Use descriptive labels: "01_login_success" not "screenshot1"
+ * - Include test case ID if applicable: "TC001_02_dashboard_loaded"
+ * - Use sequential numbering for readability: "01_", "02_", "03_"
+ * 
+ * @param page - Playwright Page object
+ * @param testInfo - TestInfo for attaching to report
+ * @param label - Descriptive label (visible in HTML report)
+ * @param options - Optional screenshot configuration
+ */
+export async function milestone(
+  page: Page,
+  testInfo: TestInfo,
+  label: string,
+  options?: ScreenshotOptions
+): Promise<void> {
+  const { fullPage = true, timeout = 3000, logger } = options || {};
+
+  try {
+    await page.waitForLoadState('networkidle', { timeout }).catch(() => 
+      page.waitForLoadState('domcontentloaded', { timeout: 1000 })
+    );
+    
+    await page.waitForTimeout(400);
+    
+    const screenshotBytes = await page.screenshot({ fullPage });
+    
+    await testInfo.attach(label, {
+      contentType: 'image/png',
+      body: screenshotBytes,
+    });
+
+    logger?.info('Screenshot captured', label);
+  } catch (error) {
+    logger?.fail('Screenshot capture failed', { 
+      actual: error instanceof Error ? error.message : 'unknown error' 
+    });
+  }
+}
+
+/**
+ * Captures screenshot on failure - used by framework fixture automatically.
+ * This is a fallback; explicit milestone() calls are preferred for strategic evidence.
  */
 export async function captureFailure(
-  page:     Page,
+  page: Page,
   testInfo: TestInfo,
-  label:    string,
-  error:    unknown,
-): Promise<never> {
+  testTitle: string
+): Promise<void> {
   try {
-    await attachScreenshot(page, testInfo, `❌ FAIL_${label}`);
-    logger.fail(label, error instanceof Error ? error.message : String(error));
+    const screenshot = await page.screenshot({ fullPage: true });
+    await testInfo.attach(`❌ FAIL — ${testTitle}`, {
+      body: screenshot,
+      contentType: 'image/png',
+    });
   } catch {
-    // Screenshot itself failed — do not mask the original error
+    // Non-fatal - page may be closed
   }
-  throw error;
+}
+
+/**
+ * Captures multiple screenshots in sequence for multi-step validation.
+ * Use sparingly - only when comparing before/after states is critical.
+ * 
+ * @example
+ * await captureSequence(page, testInfo, [
+ *   'TC005_01_filter_before',
+ *   'TC005_02_filter_applied',
+ *   'TC005_03_results_displayed'
+ * ]);
+ */
+export async function captureSequence(
+  page: Page,
+  testInfo: TestInfo,
+  labels: string[],
+  options?: ScreenshotOptions
+): Promise<void> {
+  for (const label of labels) {
+    await milestone(page, testInfo, label, options);
+    await page.waitForTimeout(500);
+  }
 }

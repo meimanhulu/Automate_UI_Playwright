@@ -5,10 +5,12 @@
  * Contains:
  *  - generateMid()          — unique MID generator for merchant tests
  *  - attachTestMetadata()   — attaches TC ID, feature, priority as JSON attachment
- *  - attachScreenshot()     — attaches a full-page screenshot with label
+ *  - attachScreenshot()     — attaches a full-page screenshot with label (deprecated - use milestone)
+ *  - milestone()            — strategic screenshot capture (Senior SDET standard)
  */
 
 import { Page, TestInfo } from '@playwright/test';
+import { milestone as captureCheckpoint } from './ScreenshotHelper';
 
 // ─── MID Generator ────────────────────────────────────────────────────────────
 
@@ -60,11 +62,8 @@ export async function attachTestMetadata(
 /**
  * Takes a full-page screenshot and attaches it to the Playwright test report.
  *
- * Waits for page stability before capturing to ensure screenshots are clear
- * and show fully loaded/rendered content (not loading states or animations).
- *
- * Screenshots are attached inline in the HTML report for easy review.
- * This replaces manual `page.screenshot({ path: ... })` calls.
+ * @deprecated Use milestone() from ScreenshotHelper instead for Senior SDET standards.
+ * This function remains for backward compatibility but new tests should use milestone().
  *
  * @param page     - Playwright Page object
  * @param testInfo - Playwright TestInfo object (from test context)
@@ -75,29 +74,21 @@ export async function attachScreenshot(
   testInfo: TestInfo,
   label:    string,
 ): Promise<void> {
-  // Wait for page to be stable before screenshot
-  try {
-    // Wait for network to be mostly idle (no more than 2 network connections for 500ms)
-    await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {
-      // Fallback: at least wait for DOM to be ready if networkidle times out
-      return page.waitForLoadState('domcontentloaded', { timeout: 1000 });
-    });
-    
-    // Additional delay to ensure:
-    // - CSS animations/transitions complete
-    // - Modals/toasts are fully visible
-    // - Lazy-loaded images render
-    // - Dynamic content settles
-    await page.waitForTimeout(400);
-    
-  } catch {
-    // If all waits fail, proceed anyway - don't block screenshot
-    // Better to have a slightly blurry screenshot than no screenshot
-  }
-  
-  const screenshotBytes = await page.screenshot({ fullPage: true });
-  testInfo.attach(label, {
-    contentType: 'image/png',
-    body:        screenshotBytes,
-  });
+  await captureCheckpoint(page, testInfo, label);
+}
+
+/**
+ * Strategic screenshot capture following Senior SDET standards.
+ * Use this for meaningful checkpoints only.
+ *
+ * @param page     - Playwright Page object
+ * @param testInfo - Playwright TestInfo object (from test context)
+ * @param label    - descriptive label (e.g. "TC012_01_login_success")
+ */
+export async function milestone(
+  page:     Page,
+  testInfo: TestInfo,
+  label:    string,
+): Promise<void> {
+  await captureCheckpoint(page, testInfo, label);
 }

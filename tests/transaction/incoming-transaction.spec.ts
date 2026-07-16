@@ -15,6 +15,7 @@ import { DownloadsListPage }            from '../../pages/downloads/DownloadsLis
 import { LoginLogoutPage }              from '../../pages/LoginLogoutPage';
 import { attachTestMetadata }           from '../../utils/test-helper';
 import { milestone }                    from '../../utils/ScreenshotHelper';
+import { assertVisible, assertText }    from '../../utils/AssertionHelper';
 
 
 // ─── Shared state (one login for all TCs in this file) ────────────────────────

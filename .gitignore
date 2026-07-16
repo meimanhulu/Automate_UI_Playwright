@@ -8,4 +8,12 @@ node_modules/
 /playwright/.auth/
 metrics/test-results.json
 
+# Reports and artifacts
 results/
+reports/allure-results/
+reports/allure-report/
+reports/logs/
+reports/downloads/
+reports/test-results/
+reports/videos/
+reports/playwright-report/

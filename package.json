@@ -15,6 +15,9 @@
     "report": "playwright show-report playwright-report",
     "report:latest": "node -e \"const fs=require('fs'),p=require('path'); const runs=fs.readdirSync('results/reports').filter(d=>d.startsWith('run_')).sort().reverse(); if(!runs.length){console.log('Belum ada run tersimpan.');process.exit(1);} const latest=p.join('results','reports',runs[0],'html'); require('child_process').execSync('npx playwright show-report '+latest,{stdio:'inherit'});\"",
     "serve-report": "node scripts/open-report.js",
+    "allure:generate": "allure generate reports/allure-results --clean -o reports/allure-report",
+    "allure:open": "allure open reports/allure-report",
+    "allure:serve": "allure serve reports/allure-results",
     "codegen": "playwright codegen",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
@@ -23,6 +26,7 @@
     "@types/node": "^22.0.0",
     "@types/pdfkit": "^0.17.6",
     "@types/winston": "^2.4.4",
+    "allure-playwright": "^3.10.2",
     "dotenv": "^16.4.5",
     "pdfkit": "^0.19.1",
     "typescript": "^5.6.3",

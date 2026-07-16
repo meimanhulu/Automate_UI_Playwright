@@ -27,6 +27,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report' }],           // backward-compat alias
     ['json', { outputFile: 'metrics/test-results.json' }],
     ['list'],
+    ['allure-playwright', { outputFolder: 'reports/allure-results', detail: true, suiteTitle: false }],
     ['./reporters/PdfReporter.ts'],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
