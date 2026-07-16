@@ -26,14 +26,12 @@ export abstract class BaseTransactionPage extends BasePage {
   async exportThisPage(): Promise<void> {
     await this.btnExportIcon.click();
     await this.menuExportThisPage.click();
-    // Tekan escape untuk menutup dropdown menu agar tidak menutupi layout/elemen lain (seperti toast/icon)
     await this.page.keyboard.press('Escape');
   }
 
   async exportAllPages(): Promise<void> {
     await this.btnExportIcon.click();
     await this.menuExportAllPage.click();
-    // Tekan escape untuk menutup dropdown menu agar tidak menutupi layout/elemen lain (seperti toast/icon)
     await this.page.keyboard.press('Escape');
   }
 

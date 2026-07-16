@@ -7,7 +7,8 @@
  */
 
 import { test, expect }                      from '../../fixtures/framework.fixture';
-import type { Download, Page }               from '@playwright/test';
+import { attachBlankTabAutoClose }           from '../../fixtures/base.fixture';
+import type { Download, Page, BrowserContext } from '@playwright/test';
 import { IncomingTransactionPage }      from '../../pages/transaction/IncomingTransactionPage';
 import { TopbarPage }                   from '../../pages/layout/TopbarPage';
 import { DownloadsListPage }            from '../../pages/downloads/DownloadsListPage';
@@ -19,6 +20,7 @@ import { milestone }                    from '../../utils/ScreenshotHelper';
 // ─── Shared state (one login for all TCs in this file) ────────────────────────
 
 test.describe.serial('Incoming Transaction Flow @regression', () => {
+  let context:       BrowserContext;
   let page:          Page;
   let incomingPage:  IncomingTransactionPage;
   let topbarPage:    TopbarPage;
@@ -27,7 +29,16 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
   // ── Login once before all TCs ─────────────────────────────────────────────
 
   test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage();
+    context = await browser.newContext({
+      baseURL: process.env.APP_URL || 'https://uat.pg-poppay.com',
+      acceptDownloads: true,
+    });
+
+    // Create main page FIRST
+    page = await context.newPage();
+
+    // Attach listener AFTER - won't close the main page
+    attachBlankTabAutoClose(context, 150);
 
     const loginPage = new LoginLogoutPage(page);
     await loginPage.navigate('https://uat.pg-poppay.com/login');
@@ -56,6 +67,7 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
       console.warn('[afterAll] Auto-logout failed:', e);
     } finally {
       await page.close();
+      await context.close();
     }
   });
 
@@ -153,9 +165,7 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
 
     await test.step('Download latest report from popup', async () => {
       logger.step(4, 'Download latest report from popup');
-      const downloadPromise = page.waitForEvent('download');
-      await topbarPage.downloads.downloadLatest();
-      download = await downloadPromise;
+      download = await topbarPage.downloads.downloadLatest();
       logger.pass('Download button clicked');
     });
 
@@ -216,9 +226,7 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
 
     await test.step('Download report and validate', async () => {
       logger.step(6, 'Download report and validate');
-      const downloadPromise = page.waitForEvent('download');
-      await downloadsPage.downloadReport('INBOUND Transaction Report');
-      const download = await downloadPromise;
+      const download = await downloadsPage.downloadReport('INBOUND Transaction Report');
 
       const result = await downloadValidator.validate(download, 'csv');
       expect(result.filename, '[TC-INC-004] Filename must not be empty').toBeTruthy();

@@ -32,7 +32,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: process.env.APP_URL || 'https://uat.pg-poppay.com',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
@@ -53,6 +53,9 @@ export default defineConfig({
     /* Fix #1: Grant permissions to avoid 'Failed to store the permission' errors */
     permissions: ['notifications', 'clipboard-read', 'clipboard-write'],
     storageState: undefined,
+
+    /* Fix #2: Accept downloads — required for download event handling */
+    acceptDownloads: true,
   },
 
   /* Organized artifact output directory */

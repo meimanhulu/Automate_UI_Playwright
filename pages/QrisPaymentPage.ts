@@ -76,7 +76,7 @@ export class QrisPaymentPage extends BasePage {
       ?? process.env['APP_URL']
       ?? 'https://uat-manjo.mitrapembayaran.com/';
 
-    await this.page.goto(target);
+    await this.navigate(target);
     await this.waitForLoading();
     await this.waitForForm();
   }

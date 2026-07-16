@@ -1,17 +1,26 @@
 // pages/BasePage.ts
 
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class BasePage {
-  constructor(protected page: Page) {}
+  readonly page: Page;
+  readonly baseUrl: string;
 
-  async navigate(path: string): Promise<void> {
-    await this.page.goto(path);
+  constructor(page: Page) {
+    this.page = page;
+    this.baseUrl = (process.env.APP_URL || 'https://uat.pg-poppay.com').replace(/\/$/, '');
+  }
+
+  async navigate(pathOrUrl: string): Promise<void> {
+    const fullUrl = pathOrUrl.startsWith('http')
+      ? pathOrUrl
+      : `${this.baseUrl}${pathOrUrl}`;
+
+    await this.page.goto(fullUrl, { waitUntil: 'domcontentloaded' });
   }
 
   async waitForLoading(): Promise<void> {
-    // Hindari menggunakan 'networkidle' karena sering menyebabkan flaky test di SPA/VueJS
-    // Tunggu hingga elemen loading spinner (jika ada) menghilang dari layar
-    await this.page.locator('.loading-spinner').waitFor({ state: 'hidden', timeout: 10_000 }).catch(() => {});
+    const spinner = this.page.locator('.loading-spinner');
+    await spinner.waitFor({ state: 'hidden', timeout: 10_000 }).catch(() => {});
   }
 }

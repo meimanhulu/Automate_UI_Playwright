@@ -88,7 +88,7 @@ export class MerchantListPage extends BasePage {
    */
   async gotoViaSidebar(fromUrl?: string): Promise<void> {
     if (fromUrl) {
-      await this.page.goto(fromUrl);
+      await this.navigate(fromUrl);
       await this.waitForLoading();
     }
 
@@ -106,9 +106,7 @@ export class MerchantListPage extends BasePage {
    * @deprecated Untuk flow E2E yang lengkap, gunakan {@link gotoViaSidebar}.
    */
   async gotoDirectUrl(): Promise<void> {
-    const base = process.env['APP_URL'] ?? '';
-    // TODO: sesuaikan path URL jika berbeda (contoh: /tenant/merchant)
-    await this.page.goto(`${base}/tenant/merchant`);
+    await this.navigate('/tenant/merchant');
     await this.waitForLoading();
     await this.expectPageLoaded();
   }

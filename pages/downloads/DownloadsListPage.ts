@@ -79,17 +79,17 @@ export class DownloadsListPage extends BasePage {
   /**
    * Menunggu status file menjadi Ready, lalu mendownloadnya.
    * Melakukan proses polling jika diperlukan.
+   * 
+   * @returns Download object untuk validasi di test script
    */
-  async downloadReport(reportName: string): Promise<void> {
+  async downloadReport(reportName: string): Promise<import('@playwright/test').Download> {
     const latestReport = this.getLatestReadyReport(reportName);
     
-    // Karena async background S3 mungkin butuh waktu, kita coba tunggu barisnya muncul (Ready)
     await expect(
       latestReport,
       `Report "${reportName}" terbaru harus berstatus Ready untuk diunduh`
-    ).toBeVisible({ timeout: 30_000 }); // Tunggu maksimal 30 detik untuk file terproses
+    ).toBeVisible({ timeout: 30_000 });
     
-    // Karena icon download selalu berada di kolom terakhir, kita targetkan secara spesifik
     const downloadIcon = latestReport.locator('td:last-child span[role="presentation"]');
     
     await expect(
@@ -97,11 +97,15 @@ export class DownloadsListPage extends BasePage {
       `Ikon download untuk report "${reportName}" harus terlihat`
     ).toBeVisible({ timeout: 5_000 });
 
-    // Memberikan jeda 2500ms agar proses klik tombol download terlihat jelas
     await this.page.waitForTimeout(2500);
 
-    // Setelah ready dan icon terlihat, klik download
-    // Proses waitForEvent('download') harus dilakukan di level Test Script sebelum memanggil fungsi ini
-    await downloadIcon.click();
+    // ✅ waitForEvent('download') intercepts at network level
+    // → prevents new tab from opening entirely
+    const [download] = await Promise.all([
+      this.page.waitForEvent('download', { timeout: 30_000 }),
+      downloadIcon.click(),
+    ]);
+
+    return download;
   }
 }

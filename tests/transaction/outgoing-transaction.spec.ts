@@ -106,9 +106,7 @@ test.describe('Outgoing Transaction Flow @regression', () => {
 
     await test.step('Download latest report from popup', async () => {
       logger.step(4, 'Download latest report from popup');
-      const downloadPromise = page.waitForEvent('download');
-      await topbarPage.downloads.downloadLatest();
-      download = await downloadPromise;
+      download = await topbarPage.downloads.downloadLatest();
       logger.pass('Download button clicked');
     });
 
@@ -166,9 +164,7 @@ test.describe('Outgoing Transaction Flow @regression', () => {
 
     await test.step('Download report and validate', async () => {
       logger.step(6, 'Download report and validate');
-      const downloadPromise = page.waitForEvent('download');
-      await downloadsPage.downloadReport('OUTBOUND Transaction Report');
-      const download = await downloadPromise;
+      const download = await downloadsPage.downloadReport('OUTBOUND Transaction Report');
 
       const result = await downloadValidator.validate(download, 'csv');
       expect(result.filename, '[TC-OUT-004] Filename must not be empty').toBeTruthy();

@@ -32,3 +32,785 @@
 [10:31:39.545] EXECUTION FINISHED  ✓ PASSED  (7.2s)
 ────────────────────────────────────────────────────────────
 
+────────────────────────────────────────────────────────────
+[10:36:51.486] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:36:51.490] [STEP 1] Export This Page
+[10:36:51.943] [PASS] Export This Page triggered
+[10:36:51.944] [STEP 2] Validate Export Started toast
+[10:36:52.015] [PASS] Toast Export Started displayed
+[10:36:52.139] [STEP 3] Navigate to Show All Downloads
+[10:36:52.617] [PASS] Navigated to Downloads page
+[10:36:52.871] [STEP 4] Validate Downloads page loaded
+[10:36:52.997] [PASS] Downloads page loaded
+[10:36:52.998] [STEP 5] Wait for INBOUND report to be Ready
+[10:36:53.027] [PASS] Latest report status = Ready
+[10:36:53.145] [STEP 6] Download report and validate
+[10:36:55.987] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJASIMclHF3Ylu32H95a3OUnp.csv
+[10:36:55.987] [PASS] Extension: .csv
+[10:36:56.084] [PASS] File size: 103 B
+[10:36:56.085] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:36:56.085] [PASS] CSV data rows: 0
+[10:36:56.090] [PASS] Download validated  (98ms)
+[10:36:56.090] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJASIMclHF3Ylu32H95a3OUnp.csv
+[10:36:56.090] [INFO] Size  →  103 B
+[10:36:56.090] [INFO] Duration  →  98ms
+[10:36:56.094] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJASIMclHF3Ylu32H95a3OUnp.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:36:58.249] EXECUTION FINISHED  ✓ PASSED  (6.9s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:37:22.866] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:37:22.869] [STEP 1] Export This Page
+[10:37:23.425] [PASS] Export This Page triggered
+[10:37:23.426] [STEP 2] Validate Export Started toast
+[10:37:23.471] [PASS] Toast Export Started displayed
+[10:37:23.583] [STEP 3] Navigate to Show All Downloads
+[10:37:24.041] [PASS] Navigated to Downloads page
+[10:37:24.272] [STEP 4] Validate Downloads page loaded
+[10:37:24.439] [PASS] Downloads page loaded
+[10:37:24.440] [STEP 5] Wait for INBOUND report to be Ready
+[10:37:24.472] [PASS] Latest report status = Ready
+[10:37:24.607] [STEP 6] Download report and validate
+[10:37:27.368] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJEJ4DGAcFDvVaZoTCEMkD0Vy.csv
+[10:37:27.368] [PASS] Extension: .csv
+[10:37:27.539] [PASS] File size: 103 B
+[10:37:27.539] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:37:27.540] [PASS] CSV data rows: 0
+[10:37:27.545] [PASS] Download validated  (172ms)
+[10:37:27.545] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJEJ4DGAcFDvVaZoTCEMkD0Vy.csv
+[10:37:27.545] [INFO] Size  →  103 B
+[10:37:27.545] [INFO] Duration  →  172ms
+[10:37:27.552] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJEJ4DGAcFDvVaZoTCEMkD0Vy.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:37:29.695] EXECUTION FINISHED  ✓ PASSED  (7.0s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:40:05.981] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:40:05.984] [STEP 1] Export This Page
+[10:40:06.550] [PASS] Export This Page triggered
+[10:40:06.552] [STEP 2] Validate Export Started toast
+[10:40:06.586] [PASS] Toast Export Started displayed
+[10:40:06.727] [STEP 3] Navigate to Show All Downloads
+[10:40:07.224] [PASS] Navigated to Downloads page
+[10:40:07.451] [STEP 4] Validate Downloads page loaded
+[10:40:07.588] [PASS] Downloads page loaded
+[10:40:07.590] [STEP 5] Wait for INBOUND report to be Ready
+[10:40:07.620] [PASS] Latest report status = Ready
+[10:40:07.742] [STEP 6] Download report and validate
+[10:40:10.476] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJYxq4Xma01Tr4ZnPjNMiFFBN.csv
+[10:40:10.477] [PASS] Extension: .csv
+[10:40:10.588] [PASS] File size: 103 B
+[10:40:10.588] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:40:10.588] [PASS] CSV data rows: 0
+[10:40:10.591] [PASS] Download validated  (112ms)
+[10:40:10.591] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJYxq4Xma01Tr4ZnPjNMiFFBN.csv
+[10:40:10.591] [INFO] Size  →  103 B
+[10:40:10.591] [INFO] Duration  →  112ms
+[10:40:10.593] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZJYxq4Xma01Tr4ZnPjNMiFFBN.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:40:12.841] EXECUTION FINISHED  ✓ PASSED  (7.0s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:49:48.011] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:49:48.018] [STEP 1] Export This Page
+[10:49:48.628] [PASS] Export This Page triggered
+[10:49:48.630] [STEP 2] Validate Export Started toast
+[10:49:48.664] [PASS] Toast Export Started displayed
+[10:49:48.810] [STEP 3] Navigate to Show All Downloads
+[10:49:49.282] [PASS] Navigated to Downloads page
+[10:49:49.799] [STEP 4] Validate Downloads page loaded
+[10:49:50.043] [PASS] Downloads page loaded
+[10:49:50.044] [STEP 5] Wait for INBOUND report to be Ready
+[10:49:50.103] [PASS] Latest report status = Ready
+[10:49:50.304] [STEP 6] Download report and validate
+[10:49:53.243] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZKk1AZ70GAPW7HDaLnJYTv82E.csv
+[10:49:53.243] [PASS] Extension: .csv
+[10:49:53.581] [PASS] File size: 103 B
+[10:49:53.582] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:49:53.582] [PASS] CSV data rows: 0
+[10:49:53.587] [PASS] Download validated  (339ms)
+[10:49:53.587] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZKk1AZ70GAPW7HDaLnJYTv82E.csv
+[10:49:53.587] [INFO] Size  →  103 B
+[10:49:53.587] [INFO] Duration  →  339ms
+[10:49:53.591] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZKk1AZ70GAPW7HDaLnJYTv82E.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:49:55.808] EXECUTION FINISHED  ✓ PASSED  (8.0s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:55:10.004] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:55:10.011] [STEP 1] Export This Page
+[10:55:10.482] [PASS] Export This Page triggered
+[10:55:10.483] [STEP 2] Validate Export Started toast
+[10:55:10.523] [PASS] Toast Export Started displayed
+[10:55:10.747] [STEP 3] Navigate to Show All Downloads
+[10:55:11.187] [PASS] Navigated to Downloads page
+[10:55:11.652] [STEP 4] Validate Downloads page loaded
+[10:55:11.937] [PASS] Downloads page loaded
+[10:55:11.939] [STEP 5] Wait for INBOUND report to be Ready
+[10:55:11.985] [PASS] Latest report status = Ready
+[10:55:12.216] [STEP 6] Download report and validate
+[10:55:15.236] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLOV7jPGD1JxHVugmB29pxrZp.csv
+[10:55:15.236] [PASS] Extension: .csv
+[10:55:15.487] [PASS] File size: 103 B
+[10:55:15.488] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:55:15.488] [PASS] CSV data rows: 0
+[10:55:15.493] [PASS] Download validated  (252ms)
+[10:55:15.493] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLOV7jPGD1JxHVugmB29pxrZp.csv
+[10:55:15.493] [INFO] Size  →  103 B
+[10:55:15.493] [INFO] Duration  →  252ms
+[10:55:15.499] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLOV7jPGD1JxHVugmB29pxrZp.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:55:17.688] EXECUTION FINISHED  ✓ PASSED  (7.9s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[10:55:46.808] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[10:55:46.814] [STEP 1] Export This Page
+[10:55:47.349] [PASS] Export This Page triggered
+[10:55:47.351] [STEP 2] Validate Export Started toast
+[10:55:47.390] [PASS] Toast Export Started displayed
+[10:55:47.516] [STEP 3] Navigate to Show All Downloads
+[10:55:47.964] [PASS] Navigated to Downloads page
+[10:55:48.240] [STEP 4] Validate Downloads page loaded
+[10:55:48.437] [PASS] Downloads page loaded
+[10:55:48.439] [STEP 5] Wait for INBOUND report to be Ready
+[10:55:48.476] [PASS] Latest report status = Ready
+[10:55:48.609] [STEP 6] Download report and validate
+[10:55:51.589] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLT2lvccesC5k1MFx5BKpFSnI.csv
+[10:55:51.589] [PASS] Extension: .csv
+[10:55:51.825] [PASS] File size: 103 B
+[10:55:51.825] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[10:55:51.826] [PASS] CSV data rows: 0
+[10:55:51.832] [PASS] Download validated  (237ms)
+[10:55:51.832] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLT2lvccesC5k1MFx5BKpFSnI.csv
+[10:55:51.832] [INFO] Size  →  103 B
+[10:55:51.832] [INFO] Duration  →  237ms
+[10:55:51.839] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZLT2lvccesC5k1MFx5BKpFSnI.csv  (103 B)
+────────────────────────────────────────────────────────────
+[10:55:54.133] EXECUTION FINISHED  ✓ PASSED  (7.6s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[11:06:34.572] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[11:06:34.578] [STEP 1] Export This Page
+[11:06:35.177] [PASS] Export This Page triggered
+[11:06:35.179] [STEP 2] Validate Export Started toast
+[11:06:35.234] [PASS] Toast Export Started displayed
+[11:06:35.553] [STEP 3] Navigate to Show All Downloads
+[11:06:36.049] [PASS] Navigated to Downloads page
+[11:06:36.818] [STEP 4] Validate Downloads page loaded
+[11:06:37.098] [PASS] Downloads page loaded
+[11:06:37.099] [STEP 5] Wait for INBOUND report to be Ready
+[11:06:37.147] [PASS] Latest report status = Ready
+[11:06:37.461] [STEP 6] Download report and validate
+[11:06:40.462] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZMmWSQ0FcqRCbjUgTi06mWESe.csv
+[11:06:40.463] [PASS] Extension: .csv
+[11:06:40.634] [PASS] File size: 103 B
+[11:06:40.634] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[11:06:40.634] [PASS] CSV data rows: 0
+[11:06:40.641] [PASS] Download validated  (173ms)
+[11:06:40.641] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZMmWSQ0FcqRCbjUgTi06mWESe.csv
+[11:06:40.641] [INFO] Size  →  103 B
+[11:06:40.641] [INFO] Duration  →  173ms
+[11:06:40.648] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZMmWSQ0FcqRCbjUgTi06mWESe.csv  (103 B)
+────────────────────────────────────────────────────────────
+[11:06:42.951] EXECUTION FINISHED  ✓ PASSED  (8.7s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[11:35:01.456] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[11:35:01.460] [STEP 1] Export This Page
+[11:35:02.055] [PASS] Export This Page triggered
+[11:35:02.058] [STEP 2] Validate Export Started toast
+[11:35:02.086] [PASS] Toast Export Started displayed
+[11:35:02.209] [STEP 3] Navigate to Show All Downloads
+[11:35:02.608] [PASS] Navigated to Downloads page
+[11:35:02.895] [STEP 4] Validate Downloads page loaded
+[11:35:03.087] [PASS] Downloads page loaded
+[11:35:03.089] [STEP 5] Wait for INBOUND report to be Ready
+[11:35:03.129] [PASS] Latest report status = Ready
+[11:35:03.259] [STEP 6] Download report and validate
+[11:35:06.108] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQF46XCdO36NRFNbgmgoyfDew.csv
+[11:35:06.108] [PASS] Extension: .csv
+[11:35:06.192] [PASS] File size: 959 B
+[11:35:06.192] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[11:35:06.192] [PASS] CSV data rows: 5
+[11:35:06.197] [PASS] Download validated  (84ms)
+[11:35:06.197] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQF46XCdO36NRFNbgmgoyfDew.csv
+[11:35:06.197] [INFO] Size  →  959 B
+[11:35:06.197] [INFO] Duration  →  84ms
+[11:35:06.201] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQF46XCdO36NRFNbgmgoyfDew.csv  (959 B)
+────────────────────────────────────────────────────────────
+[11:35:08.382] EXECUTION FINISHED  ✓ PASSED  (7.1s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[11:36:05.178] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[11:36:05.184] [STEP 1] Export This Page
+[11:36:05.842] [PASS] Export This Page triggered
+[11:36:05.844] [STEP 2] Validate Export Started toast
+[11:36:05.888] [PASS] Toast Export Started displayed
+[11:36:06.055] [STEP 3] Navigate to Show All Downloads
+[11:36:06.562] [PASS] Navigated to Downloads page
+[11:36:06.812] [STEP 4] Validate Downloads page loaded
+[11:36:06.992] [PASS] Downloads page loaded
+[11:36:06.994] [STEP 5] Wait for INBOUND report to be Ready
+[11:36:07.040] [PASS] Latest report status = Ready
+[11:36:07.193] [STEP 6] Download report and validate
+[11:36:10.001] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQN45n3Pre9PHjryMMktxqeMt.csv
+[11:36:10.001] [PASS] Extension: .csv
+[11:36:10.076] [PASS] File size: 959 B
+[11:36:10.077] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[11:36:10.077] [PASS] CSV data rows: 5
+[11:36:10.085] [PASS] Download validated  (76ms)
+[11:36:10.085] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQN45n3Pre9PHjryMMktxqeMt.csv
+[11:36:10.085] [INFO] Size  →  959 B
+[11:36:10.085] [INFO] Duration  →  76ms
+[11:36:10.096] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZQN45n3Pre9PHjryMMktxqeMt.csv  (959 B)
+────────────────────────────────────────────────────────────
+[11:36:12.262] EXECUTION FINISHED  ✓ PASSED  (7.3s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[11:45:26.476] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[11:45:26.491] [STEP 1] Export This Page
+[11:45:27.698] [PASS] Export This Page triggered
+[11:45:27.705] [STEP 2] Validate Export Started toast
+[11:45:27.798] [PASS] Toast Export Started displayed
+[11:45:27.983] [STEP 3] Navigate to Show All Downloads
+[11:45:28.533] [PASS] Navigated to Downloads page
+[11:45:28.822] [STEP 4] Validate Downloads page loaded
+[11:45:29.099] [PASS] Downloads page loaded
+[11:45:29.101] [STEP 5] Wait for INBOUND report to be Ready
+[11:45:29.153] [PASS] Latest report status = Ready
+[11:45:29.317] [STEP 6] Download report and validate
+[11:45:32.121] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZRVWWBLNMbOyn7B3h2mTA23wU.csv
+[11:45:32.122] [PASS] Extension: .csv
+[11:45:32.208] [PASS] File size: 959 B
+[11:45:32.209] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[11:45:32.209] [PASS] CSV data rows: 5
+[11:45:32.215] [PASS] Download validated  (88ms)
+[11:45:32.215] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZRVWWBLNMbOyn7B3h2mTA23wU.csv
+[11:45:32.215] [INFO] Size  →  959 B
+[11:45:32.216] [INFO] Duration  →  88ms
+[11:45:32.224] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZRVWWBLNMbOyn7B3h2mTA23wU.csv  (959 B)
+────────────────────────────────────────────────────────────
+[11:45:34.505] EXECUTION FINISHED  ✓ PASSED  (8.2s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[12:35:55.789] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[12:35:55.793] [STEP 1] Export This Page
+[12:35:56.965] [PASS] Export This Page triggered
+[12:35:56.968] [STEP 2] Validate Export Started toast
+[12:35:57.020] [PASS] Toast Export Started displayed
+[12:35:57.158] [STEP 3] Navigate to Show All Downloads
+[12:35:57.658] [PASS] Navigated to Downloads page
+[12:35:57.907] [STEP 4] Validate Downloads page loaded
+[12:35:58.058] [PASS] Downloads page loaded
+[12:35:58.059] [STEP 5] Wait for INBOUND report to be Ready
+[12:35:58.086] [PASS] Latest report status = Ready
+[12:35:58.215] [STEP 6] Download report and validate
+[12:36:00.981] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXeDFD9JhX6x9GouAMTLZdUKm.csv
+[12:36:00.981] [PASS] Extension: .csv
+[12:36:01.043] [PASS] File size: 959 B
+[12:36:01.044] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[12:36:01.044] [PASS] CSV data rows: 5
+[12:36:01.047] [PASS] Download validated  (63ms)
+[12:36:01.048] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXeDFD9JhX6x9GouAMTLZdUKm.csv
+[12:36:01.048] [INFO] Size  →  959 B
+[12:36:01.048] [INFO] Duration  →  63ms
+[12:36:01.051] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXeDFD9JhX6x9GouAMTLZdUKm.csv  (959 B)
+────────────────────────────────────────────────────────────
+[12:36:03.194] EXECUTION FINISHED  ✓ PASSED  (7.6s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[12:36:31.118] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[12:36:31.121] [STEP 1] Export This Page
+[12:36:32.252] [PASS] Export This Page triggered
+[12:36:32.254] [STEP 2] Validate Export Started toast
+[12:36:32.292] [PASS] Toast Export Started displayed
+[12:36:32.415] [STEP 3] Navigate to Show All Downloads
+[12:36:32.932] [PASS] Navigated to Downloads page
+[12:36:33.239] [STEP 4] Validate Downloads page loaded
+[12:36:33.353] [PASS] Downloads page loaded
+[12:36:33.353] [STEP 5] Wait for INBOUND report to be Ready
+[12:36:33.377] [PASS] Latest report status = Ready
+[12:36:33.513] [STEP 6] Download report and validate
+[12:36:36.320] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXigoH2xlkni4qMxyiSkXs3jU.csv
+[12:36:36.320] [PASS] Extension: .csv
+[12:36:36.384] [PASS] File size: 959 B
+[12:36:36.385] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[12:36:36.385] [PASS] CSV data rows: 5
+[12:36:36.390] [PASS] Download validated  (65ms)
+[12:36:36.390] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXigoH2xlkni4qMxyiSkXs3jU.csv
+[12:36:36.390] [INFO] Size  →  959 B
+[12:36:36.390] [INFO] Duration  →  65ms
+[12:36:36.395] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZXigoH2xlkni4qMxyiSkXs3jU.csv  (959 B)
+────────────────────────────────────────────────────────────
+[12:36:38.557] EXECUTION FINISHED  ✓ PASSED  (7.6s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[14:01:58.799] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[14:01:58.802] [STEP 1] Export This Page
+[14:01:59.367] [PASS] Export This Page triggered
+[14:01:59.368] [STEP 2] Validate Export Started toast
+[14:01:59.416] [PASS] Toast Export Started displayed
+[14:01:59.567] [STEP 3] Navigate to Show All Downloads
+[14:02:00.122] [PASS] Navigated to Downloads page
+[14:02:00.452] [STEP 4] Validate Downloads page loaded
+[14:02:00.558] [PASS] Downloads page loaded
+[14:02:00.559] [STEP 5] Wait for INBOUND report to be Ready
+[14:02:00.575] [PASS] Latest report status = Ready
+[14:02:00.670] [STEP 6] Download report and validate
+[14:02:03.459] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZi726sckFK8Z8JePhczqTfy4K.csv
+[14:02:03.459] [PASS] Extension: .csv
+[14:02:03.539] [PASS] File size: 1.03 KB
+[14:02:03.539] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[14:02:03.539] [PASS] CSV data rows: 5
+[14:02:03.543] [PASS] Download validated  (80ms)
+[14:02:03.543] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZi726sckFK8Z8JePhczqTfy4K.csv
+[14:02:03.543] [INFO] Size  →  1.03 KB
+[14:02:03.543] [INFO] Duration  →  80ms
+[14:02:03.547] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZi726sckFK8Z8JePhczqTfy4K.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[14:02:05.709] EXECUTION FINISHED  ✓ PASSED  (7.2s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[14:15:28.728] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[14:15:28.732] [STEP 1] Export This Page
+[14:15:29.320] [PASS] Export This Page triggered
+[14:15:29.321] [STEP 2] Validate Export Started toast
+[14:15:29.366] [PASS] Toast Export Started displayed
+[14:15:29.522] [STEP 3] Navigate to Show All Downloads
+[14:15:30.058] [PASS] Navigated to Downloads page
+[14:15:30.359] [STEP 4] Validate Downloads page loaded
+[14:15:30.461] [PASS] Downloads page loaded
+[14:15:30.462] [STEP 5] Wait for INBOUND report to be Ready
+[14:15:30.484] [PASS] Latest report status = Ready
+[14:15:30.605] [STEP 6] Download report and validate
+[14:15:33.357] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZjkmmJxsiUhTEk23b1v04gZJ9.csv
+[14:15:33.357] [PASS] Extension: .csv
+[14:15:33.441] [PASS] File size: 1.03 KB
+[14:15:33.441] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[14:15:33.441] [PASS] CSV data rows: 5
+[14:15:33.449] [PASS] Download validated  (84ms)
+[14:15:33.449] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZjkmmJxsiUhTEk23b1v04gZJ9.csv
+[14:15:33.449] [INFO] Size  →  1.03 KB
+[14:15:33.449] [INFO] Duration  →  84ms
+[14:15:33.460] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZjkmmJxsiUhTEk23b1v04gZJ9.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[14:15:35.689] EXECUTION FINISHED  ✓ PASSED  (7.1s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[14:41:49.066] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[14:41:49.073] [STEP 1] Export This Page
+[14:41:49.560] [PASS] Export This Page triggered
+[14:41:49.562] [STEP 2] Validate Export Started toast
+[14:41:49.598] [PASS] Toast Export Started displayed
+[14:41:49.738] [STEP 3] Navigate to Show All Downloads
+[14:41:50.226] [PASS] Navigated to Downloads page
+[14:41:50.418] [STEP 4] Validate Downloads page loaded
+[14:41:50.685] [PASS] Downloads page loaded
+[14:41:50.687] [STEP 5] Wait for INBOUND report to be Ready
+[14:41:50.726] [PASS] Latest report status = Ready
+[14:41:50.875] [STEP 6] Download report and validate
+[14:41:53.765] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZmxXm2KmRXLbwF2jRZ5FNns3C.csv
+[14:41:53.765] [PASS] Extension: .csv
+[14:41:53.836] [PASS] File size: 1.03 KB
+[14:41:53.837] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[14:41:53.838] [PASS] CSV data rows: 5
+[14:41:53.844] [PASS] Download validated  (73ms)
+[14:41:53.844] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZmxXm2KmRXLbwF2jRZ5FNns3C.csv
+[14:41:53.845] [INFO] Size  →  1.03 KB
+[14:41:53.845] [INFO] Duration  →  73ms
+[14:41:53.851] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZmxXm2KmRXLbwF2jRZ5FNns3C.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[14:41:56.053] EXECUTION FINISHED  ✓ PASSED  (7.2s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[14:42:32.530] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[14:42:32.536] [STEP 1] Export This Page
+[14:42:33.135] [PASS] Export This Page triggered
+[14:42:33.137] [STEP 2] Validate Export Started toast
+[14:42:33.175] [PASS] Toast Export Started displayed
+[14:42:33.330] [STEP 3] Navigate to Show All Downloads
+[14:42:33.879] [PASS] Navigated to Downloads page
+[14:42:34.126] [STEP 4] Validate Downloads page loaded
+[14:42:34.335] [PASS] Downloads page loaded
+[14:42:34.337] [STEP 5] Wait for INBOUND report to be Ready
+[14:42:34.367] [PASS] Latest report status = Ready
+[14:42:34.499] [STEP 6] Download report and validate
+[14:42:37.352] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZn2tuPIhW1aUFKMeX0rqHFvog.csv
+[14:42:37.352] [PASS] Extension: .csv
+[14:42:37.427] [PASS] File size: 1.03 KB
+[14:42:37.428] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[14:42:37.428] [PASS] CSV data rows: 5
+[14:42:37.433] [PASS] Download validated  (76ms)
+[14:42:37.434] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZn2tuPIhW1aUFKMeX0rqHFvog.csv
+[14:42:37.434] [INFO] Size  →  1.03 KB
+[14:42:37.434] [INFO] Duration  →  76ms
+[14:42:37.438] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZn2tuPIhW1aUFKMeX0rqHFvog.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[14:42:39.606] EXECUTION FINISHED  ✓ PASSED  (7.2s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[14:43:32.024] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[14:43:32.030] [STEP 1] Export This Page
+[14:43:32.639] [PASS] Export This Page triggered
+[14:43:32.640] [STEP 2] Validate Export Started toast
+[14:43:32.674] [PASS] Toast Export Started displayed
+[14:43:32.830] [STEP 3] Navigate to Show All Downloads
+[14:43:33.323] [PASS] Navigated to Downloads page
+[14:43:33.555] [STEP 4] Validate Downloads page loaded
+[14:43:33.806] [PASS] Downloads page loaded
+[14:43:33.808] [STEP 5] Wait for INBOUND report to be Ready
+[14:43:33.859] [PASS] Latest report status = Ready
+[14:43:34.015] [STEP 6] Download report and validate
+[14:43:36.874] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZnAUC8dHbqWDz1Lk6NzbpF1ix.csv
+[14:43:36.874] [PASS] Extension: .csv
+[14:43:36.945] [PASS] File size: 1.03 KB
+[14:43:36.945] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[14:43:36.945] [PASS] CSV data rows: 5
+[14:43:36.952] [PASS] Download validated  (71ms)
+[14:43:36.952] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZnAUC8dHbqWDz1Lk6NzbpF1ix.csv
+[14:43:36.952] [INFO] Size  →  1.03 KB
+[14:43:36.952] [INFO] Duration  →  71ms
+[14:43:36.960] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZnAUC8dHbqWDz1Lk6NzbpF1ix.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[14:43:39.147] EXECUTION FINISHED  ✓ PASSED  (7.3s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[15:11:40.896] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[15:11:40.899] [STEP 1] Export This Page
+[15:11:41.405] [PASS] Export This Page triggered
+[15:11:41.406] [STEP 2] Validate Export Started toast
+[15:11:41.454] [PASS] Toast Export Started displayed
+[15:11:41.585] [STEP 3] Navigate to Show All Downloads
+[15:11:42.029] [PASS] Navigated to Downloads page
+[15:11:42.219] [STEP 4] Validate Downloads page loaded
+[15:11:42.328] [PASS] Downloads page loaded
+[15:11:42.330] [STEP 5] Wait for INBOUND report to be Ready
+[15:11:42.351] [PASS] Latest report status = Ready
+[15:11:42.452] [STEP 6] Download report and validate
+[15:11:45.275] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqafJhsfxH4E6uWxn2t7JlPUK.csv
+[15:11:45.276] [PASS] Extension: .csv
+[15:11:45.343] [PASS] File size: 1.03 KB
+[15:11:45.343] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[15:11:45.344] [PASS] CSV data rows: 5
+[15:11:45.348] [PASS] Download validated  (69ms)
+[15:11:45.348] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqafJhsfxH4E6uWxn2t7JlPUK.csv
+[15:11:45.348] [INFO] Size  →  1.03 KB
+[15:11:45.348] [INFO] Duration  →  69ms
+[15:11:45.352] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqafJhsfxH4E6uWxn2t7JlPUK.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[15:11:47.512] EXECUTION FINISHED  ✓ PASSED  (6.9s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[15:12:15.096] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[15:12:15.100] [STEP 1] Export This Page
+[15:12:15.645] [PASS] Export This Page triggered
+[15:12:15.646] [STEP 2] Validate Export Started toast
+[15:12:15.668] [PASS] Toast Export Started displayed
+[15:12:15.797] [STEP 3] Navigate to Show All Downloads
+[15:12:16.228] [PASS] Navigated to Downloads page
+[15:12:16.413] [STEP 4] Validate Downloads page loaded
+[15:12:16.507] [PASS] Downloads page loaded
+[15:12:16.508] [STEP 5] Wait for INBOUND report to be Ready
+[15:12:16.528] [PASS] Latest report status = Ready
+[15:12:16.624] [STEP 6] Download report and validate
+[15:12:19.634] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqevoB6JIvganzWYoOVqiMKgr.csv
+[15:12:19.634] [PASS] Extension: .csv
+[15:12:19.709] [PASS] File size: 1.03 KB
+[15:12:19.709] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[15:12:19.709] [PASS] CSV data rows: 5
+[15:12:19.712] [PASS] Download validated  (75ms)
+[15:12:19.712] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqevoB6JIvganzWYoOVqiMKgr.csv
+[15:12:19.712] [INFO] Size  →  1.03 KB
+[15:12:19.712] [INFO] Duration  →  75ms
+[15:12:19.716] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZqevoB6JIvganzWYoOVqiMKgr.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[15:12:21.850] EXECUTION FINISHED  ✓ PASSED  (7.0s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[15:19:30.701] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[15:19:30.706] [STEP 1] Export This Page
+[15:19:31.323] [PASS] Export This Page triggered
+[15:19:31.325] [STEP 2] Validate Export Started toast
+[15:19:31.412] [PASS] Toast Export Started displayed
+[15:19:31.561] [STEP 3] Navigate to Show All Downloads
+[15:19:32.059] [PASS] Navigated to Downloads page
+[15:19:32.304] [STEP 4] Validate Downloads page loaded
+[15:19:32.483] [PASS] Downloads page loaded
+[15:19:32.484] [STEP 5] Wait for INBOUND report to be Ready
+[15:19:32.501] [PASS] Latest report status = Ready
+[15:19:32.654] [STEP 6] Download report and validate
+[15:19:35.418] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZrXbezAIqYRFEejn1ILcce7s9.csv
+[15:19:35.418] [PASS] Extension: .csv
+[15:19:35.495] [PASS] File size: 1.03 KB
+[15:19:35.495] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[15:19:35.495] [PASS] CSV data rows: 5
+[15:19:35.500] [PASS] Download validated  (77ms)
+[15:19:35.501] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZrXbezAIqYRFEejn1ILcce7s9.csv
+[15:19:35.501] [INFO] Size  →  1.03 KB
+[15:19:35.501] [INFO] Duration  →  77ms
+[15:19:35.505] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZrXbezAIqYRFEejn1ILcce7s9.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[15:19:37.712] EXECUTION FINISHED  ✓ PASSED  (7.2s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[15:29:32.368] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[15:29:32.371] [STEP 1] Export This Page
+[15:29:32.916] [PASS] Export This Page triggered
+[15:29:32.918] [STEP 2] Validate Export Started toast
+[15:29:32.954] [PASS] Toast Export Started displayed
+[15:29:33.079] [STEP 3] Navigate to Show All Downloads
+[15:29:33.586] [PASS] Navigated to Downloads page
+[15:29:33.803] [STEP 4] Validate Downloads page loaded
+[15:29:33.904] [PASS] Downloads page loaded
+[15:29:33.906] [STEP 5] Wait for INBOUND report to be Ready
+[15:29:33.941] [PASS] Latest report status = Ready
+[15:29:34.042] [STEP 6] Download report and validate
+[15:29:36.829] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZslJCcz9GuBeRYWT58UJhBY3h.csv
+[15:29:36.830] [PASS] Extension: .csv
+[15:29:36.907] [PASS] File size: 1.03 KB
+[15:29:36.908] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[15:29:36.909] [PASS] CSV data rows: 5
+[15:29:36.912] [PASS] Download validated  (80ms)
+[15:29:36.913] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZslJCcz9GuBeRYWT58UJhBY3h.csv
+[15:29:36.913] [INFO] Size  →  1.03 KB
+[15:29:36.913] [INFO] Duration  →  80ms
+[15:29:36.916] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZslJCcz9GuBeRYWT58UJhBY3h.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[15:29:39.066] EXECUTION FINISHED  ✓ PASSED  (6.9s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[15:43:27.739] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[15:43:27.752] [STEP 1] Export This Page
+[15:43:28.331] [PASS] Export This Page triggered
+[15:43:28.332] [STEP 2] Validate Export Started toast
+[15:43:28.379] [PASS] Toast Export Started displayed
+[15:43:28.533] [STEP 3] Navigate to Show All Downloads
+[15:43:29.122] [PASS] Navigated to Downloads page
+[15:43:29.435] [STEP 4] Validate Downloads page loaded
+[15:43:29.733] [PASS] Downloads page loaded
+[15:43:29.735] [STEP 5] Wait for INBOUND report to be Ready
+[15:43:29.790] [PASS] Latest report status = Ready
+[15:43:29.962] [STEP 6] Download report and validate
+[15:43:33.036] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZuS9AmxYbEnSznyjrNGCnEnec.csv
+[15:43:33.036] [PASS] Extension: .csv
+[15:43:33.128] [PASS] File size: 1.03 KB
+[15:43:33.129] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[15:43:33.129] [PASS] CSV data rows: 5
+[15:43:33.136] [PASS] Download validated  (93ms)
+[15:43:33.136] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZuS9AmxYbEnSznyjrNGCnEnec.csv
+[15:43:33.136] [INFO] Size  →  1.03 KB
+[15:43:33.136] [INFO] Duration  →  93ms
+[15:43:33.143] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZuS9AmxYbEnSznyjrNGCnEnec.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[15:43:35.309] EXECUTION FINISHED  ✓ PASSED  (7.7s)
+────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────
+[16:11:43.088] EXECUTION STARTED
+  Module:       Incoming Transaction Flow @regression
+  Scenario:     [TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive
+  Feature:      Incoming Transaction Flow @regression
+  TC ID:        TC-INC-004
+  Browser:      chromium
+  Environment:  staging
+────────────────────────────────────────────────────────────
+[16:11:43.096] [STEP 1] Export This Page
+[16:11:43.749] [PASS] Export This Page triggered
+[16:11:43.751] [STEP 2] Validate Export Started toast
+[16:11:43.797] [PASS] Toast Export Started displayed
+[16:11:44.402] [STEP 3] Navigate to Show All Downloads
+[16:11:44.836] [PASS] Navigated to Downloads page
+[16:11:45.414] [STEP 4] Validate Downloads page loaded
+[16:11:45.657] [PASS] Downloads page loaded
+[16:11:45.660] [STEP 5] Wait for INBOUND report to be Ready
+[16:11:45.705] [PASS] Latest report status = Ready
+[16:11:46.314] [STEP 6] Download report and validate
+[16:11:49.297] [PASS] Filename: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZxtIyUcX1szDNhMsSaGOeNdjB.csv
+[16:11:49.297] [PASS] Extension: .csv
+[16:11:49.425] [PASS] File size: 1.03 KB
+[16:11:49.426] [PASS] CSV headers (14): Date, Agg trx id, Trx id, Rrn, Acc number...
+[16:11:49.426] [PASS] CSV data rows: 5
+[16:11:49.431] [PASS] Download validated  (129ms)
+[16:11:49.432] [INFO] Filename  →  INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZxtIyUcX1szDNhMsSaGOeNdjB.csv
+[16:11:49.432] [INFO] Size  →  1.03 KB
+[16:11:49.432] [INFO] Duration  →  129ms
+[16:11:49.438] [PASS] CSV downloaded: INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZxtIyUcX1szDNhMsSaGOeNdjB.csv  (1.03 KB)
+────────────────────────────────────────────────────────────
+[16:11:52.091] EXECUTION FINISHED  ✓ PASSED  (9.2s)
+────────────────────────────────────────────────────────────
+

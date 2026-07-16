@@ -60,6 +60,9 @@ export async function attachTestMetadata(
 /**
  * Takes a full-page screenshot and attaches it to the Playwright test report.
  *
+ * Waits for page stability before capturing to ensure screenshots are clear
+ * and show fully loaded/rendered content (not loading states or animations).
+ *
  * Screenshots are attached inline in the HTML report for easy review.
  * This replaces manual `page.screenshot({ path: ... })` calls.
  *
@@ -72,6 +75,26 @@ export async function attachScreenshot(
   testInfo: TestInfo,
   label:    string,
 ): Promise<void> {
+  // Wait for page to be stable before screenshot
+  try {
+    // Wait for network to be mostly idle (no more than 2 network connections for 500ms)
+    await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {
+      // Fallback: at least wait for DOM to be ready if networkidle times out
+      return page.waitForLoadState('domcontentloaded', { timeout: 1000 });
+    });
+    
+    // Additional delay to ensure:
+    // - CSS animations/transitions complete
+    // - Modals/toasts are fully visible
+    // - Lazy-loaded images render
+    // - Dynamic content settles
+    await page.waitForTimeout(400);
+    
+  } catch {
+    // If all waits fail, proceed anyway - don't block screenshot
+    // Better to have a slightly blurry screenshot than no screenshot
+  }
+  
   const screenshotBytes = await page.screenshot({ fullPage: true });
   testInfo.attach(label, {
     contentType: 'image/png',

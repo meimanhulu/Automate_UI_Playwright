@@ -1,0 +1,25 @@
+{
+  "filename": "INBOUND_Transaction_Report_2026-07-16T00-00-00Z_to_2026-07-16T00-00-00Z_3GZMlPLVw3s15730Mzk6y3UGncl.csv",
+  "extension": ".csv",
+  "sizeBytes": 103,
+  "sizePretty": "103 B",
+  "durationMs": "389ms",
+  "downloadedAt": "2026-07-16T04:06:30.096Z",
+  "csvHeaders": [
+    "Date",
+    "Agg trx id",
+    "Trx id",
+    "Rrn",
+    "Acc number",
+    "Payment network",
+    "Curr",
+    "Amount",
+    "Net",
+    "Fee",
+    "Status",
+    "Method",
+    "Ext id",
+    "Paid at"
+  ],
+  "csvRowCount": 0
+}

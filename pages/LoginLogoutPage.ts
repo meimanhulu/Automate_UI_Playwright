@@ -29,9 +29,7 @@ export class LoginLogoutPage extends BasePage {
   // ─── LOGIN ─────────────────────────────────────────────────────────────
 
   async goto(): Promise<void> {
-    const baseUrl = process.env.APP_URL || 'https://uat.pg-poppay.com/';
-    const loginUrl = baseUrl.endsWith('/') ? baseUrl + 'login' : baseUrl + '/login';
-    await this.navigate(loginUrl);
+    await this.navigate('/login');
   }
 
   async open(): Promise<void> {
