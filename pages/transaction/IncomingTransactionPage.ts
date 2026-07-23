@@ -19,7 +19,7 @@ export class IncomingTransactionPage extends BaseTransactionPage {
     super(page);
 
     this.pageHeading = page.locator(S.pageHeading);
-      
+    
     this.tableContainer = page.locator(S.tableContainer);
 
     this.btnExportIcon = page.locator(S.btnExportIcon);

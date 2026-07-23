@@ -5,7 +5,7 @@ export class DownloadsPopup {
 
     constructor(private page: Page) {
         // The heading displayed after clicking the topbar Downloads icon
-        this.title = this.page.getByRole('heading', { name: 'Downloads', level: 1 });
+        this.title = this.page.getByRole('heading', { name: 'Downloads', level: 3 });
     }
 
     // ── Private helpers ────────────────────────────────────────────────────

@@ -60,12 +60,23 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
   test.afterAll(async () => {
     try {
       if (!page.isClosed()) {
-        await page.waitForTimeout(2000).catch(() => {});
-        await new LoginLogoutPage(page).logout().catch(() => {});
-        await page.waitForTimeout(1500).catch(() => {});
+        // Try logout with 10-second timeout to prevent hanging
+        await Promise.race([
+          (async () => {
+            await page.waitForTimeout(2000);
+            await new LoginLogoutPage(page).logout();
+            await page.waitForTimeout(1500);
+          })(),
+          new Promise((resolve) => setTimeout(resolve, 10000))
+        ]);
       }
     } catch (e) {
       console.warn('[afterAll] Auto-logout failed:', e);
+    } finally {
+      // Always close the page
+      if (!page.isClosed()) {
+        await page.close().catch(() => {});
+      }
     }
   });
 

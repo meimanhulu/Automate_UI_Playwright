@@ -14,12 +14,8 @@ export class LoginLogoutPage extends BasePage {
     this.emailInput = page.locator(S.emailInput);
     this.passwordInput = page.locator(S.passwordInput);
     this.submitButton = page.locator(S.submitButton);
-    this.btnProfile = page.locator(S.btnProfile);
-    
-    // Logout button is inside a dropdown/menu that appears after clicking profile.
-    // We resolve it lazily in logout() after the dropdown is visible, so we only
-    // store a base locator here.
-    this.btnLogout = page.getByRole('menuitem', { name: /log out/i });
+    this.btnProfile = page.locator(S.btnProfile).first();
+    this.btnLogout = page.locator(S.btnLogout).last();
   }
 
   // ─── LOGIN ─────────────────────────────────────────────────────────────
@@ -73,17 +69,14 @@ export class LoginLogoutPage extends BasePage {
    * Melakukan logout dari aplikasi
    */
   async logout(): Promise<void> {
+    // Click profile to open dropdown
     await this.btnProfile.evaluate((el) => (el as HTMLElement).click());
     
-    // Dropdown may already be open, or may need a moment to render.
-    // Try the scoped logout button first; if it fails, fall back to a page-wide text search.
-    try {
-      await this.btnLogout.waitFor({ state: 'visible', timeout: 5000 });
-      await this.btnLogout.evaluate((el) => (el as HTMLElement).click());
-    } catch {
-      await this.page.getByText(/log out/i).first().click().catch(() => {});
-    }
+    // Wait for logout button to appear and click it
+    await this.btnLogout.waitFor({ state: 'visible', timeout: 5000 });
+    await this.btnLogout.evaluate((el) => (el as HTMLElement).click());
     
-    await this.page.waitForURL('**/login', { timeout: 10_000 }).catch(() => {});
+    // Wait for redirect to login page (confirms logout succeeded)
+    await this.page.waitForURL('**/login', { timeout: 10_000 });
   }
 }

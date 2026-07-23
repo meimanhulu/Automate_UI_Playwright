@@ -13,9 +13,9 @@ export class TopbarPage extends BasePage {
     super(page);
 
     this.iconDownload = page.locator(S.iconDownload);
-      
-    // ✅ Tetap pakai h3 — ini sudah benar
-    this.dropdownContainer = page.getByRole('heading', { name: 'Downloads', level: 1 });
+    
+    // Use h3 heading level (correct structure)
+    this.dropdownContainer = page.getByRole('heading', { name: 'Downloads', level: 3 });
 
     this.btnShowAllDownloads = page.locator(S.btnShowAllDownloads);
 
