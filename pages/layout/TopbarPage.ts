@@ -12,15 +12,12 @@ export class TopbarPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    // ✅ FIX: target langsung button "Downloads" dari snapshot
-    this.iconDownload = page.getByRole('button', { name: 'Downloads' });
+    this.iconDownload = page.locator(S.iconDownload);
       
     // ✅ Tetap pakai h3 — ini sudah benar
-    this.dropdownContainer = page.getByRole('heading', { name: 'Recent Downloads', level: 3 });
+    this.dropdownContainer = page.getByRole('heading', { name: 'Downloads', level: 1 });
 
-    this.btnShowAllDownloads = S.btnShowAllDownloads
-      ? page.locator(S.btnShowAllDownloads)
-      : page.getByRole('button', { name: /show all/i });
+    this.btnShowAllDownloads = page.locator(S.btnShowAllDownloads);
 
     this.downloads = new DownloadsPopup(page);
   }
@@ -28,31 +25,30 @@ export class TopbarPage extends BasePage {
   // ── Actions ────────────────────────────────────────────────────────────────
 
   async clickDownloadIcon(): Promise<void> {
-    // Kita harus memastikan tidak tertutup toast
-    await this.iconDownload.click({ force: true });
+    await expect(this.iconDownload).toBeVisible();
+    await this.iconDownload.click();
   }
 
   async openDownloads(): Promise<void> {
+    await expect(this.iconDownload).toBeVisible();
     await this.iconDownload.click();
     await expect(this.downloads.title).toBeVisible({ timeout: 5000 });
   }
 
   async goToShowAllDownloads(): Promise<void> {
-    // ✅ Tunggu button ready sebelum klik
-    await this.iconDownload.waitFor({ state: 'visible' });
+    if (await this.dropdownContainer.isVisible().catch(() => false)) {
+      await this.iconDownload.click();
+      await expect(this.dropdownContainer).toBeHidden({ timeout: 2000 });
+    }
+
+    await expect(this.iconDownload).toBeVisible();
     await this.iconDownload.click();
     
-    // ✅ h3 akan visible setelah dropdown terbuka
     await expect(
       this.dropdownContainer,
       'Dropdown Recent Downloads harus terbuka'
     ).toBeVisible({ timeout: 5000 });
     
-    // Klik tombol untuk ke halaman Downloads 
-    // SPA Best Practice: Jangan tunggu waitForURL. Tunggu elemen UI saja di page object tujuan.
     await this.btnShowAllDownloads.click();
-    
-    // waitForLoading() dihapus karena DownloadsListPage.expectPageLoaded() 
-    // akan mengambil alih tugas sinkronisasi dengan menunggu heading muncul.
   }
 }

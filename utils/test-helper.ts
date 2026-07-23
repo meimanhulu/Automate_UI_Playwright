@@ -74,7 +74,11 @@ export async function attachScreenshot(
   testInfo: TestInfo,
   label:    string,
 ): Promise<void> {
-  await captureCheckpoint(page, testInfo, label);
+  const screenshot = await page.screenshot({ fullPage: false });
+  await testInfo.attach(`📸 ${label}`, {
+    body: screenshot,
+    contentType: 'image/png',
+  });
 }
 
 /**

@@ -21,25 +21,29 @@ export class TransactionSidebarPage extends BasePage {
     const isCollapsed = await container.evaluate((el) => el.classList.contains('max-h-0')).catch(() => false);
     
     if (isCollapsed) {
-      await this.menuTransaction.click();
+      // Scroll the sidebar menu item into view within its scrollable parent
+      const menuItem = this.page.locator('li[role="presentation"]:has(p:text-is("Transaction"))');
+      await menuItem.evaluate((el) => el.scrollIntoView({ behavior: 'instant', block: 'center' }));
+      
+      // Click via JS evaluation to bypass viewport/visibility checks
+      // (sidebar buttons can be outside viewport inside scrollable containers)
+      await this.menuTransaction.evaluate((el) => (el as HTMLElement).click());
       await this.page.waitForTimeout(500); // Tunggu animasi expand
     }
   }
 
   async goToIncoming(): Promise<void> {
     await this.expandTransactionMenu();
-    await this.subMenuIncoming.click({ force: true });
+    await this.subMenuIncoming.evaluate((el) => (el as HTMLElement).click());
+    await this.page.waitForURL('**/incoming**', { timeout: 15_000 });
     await this.waitForLoading();
-    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual sesuai permintaan
-    await this.page.waitForTimeout(2500);
   }
 
   async goToOutgoing(): Promise<void> {
     await this.expandTransactionMenu();
-    await this.subMenuOutgoing.click({ force: true });
+    await this.subMenuOutgoing.evaluate((el) => (el as HTMLElement).click());
+    await this.page.waitForURL('**/outgoing**', { timeout: 15_000 });
     await this.waitForLoading();
-    // Jeda 2.5 detik untuk memperlambat eksekusi secara visual sesuai permintaan
-    await this.page.waitForTimeout(2500);
   }
 
   async goTo(subMenu: TransactionSubMenu): Promise<void> {

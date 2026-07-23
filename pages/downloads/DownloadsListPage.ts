@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect, Download } from '@playwright/test';
 import { BasePage } from '../BasePage';
 import { DownloadsListSelector as S } from '../../selectors/downloads/downloads-list.selector';
 
@@ -9,24 +9,15 @@ export class DownloadsListPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    // pageHeading validation removed because Vue renders multiple H1 elements (hidden/visible)
-    // We will validate page readiness using URL and stable UI elements (table, rows) instead.
-    this.tableContainer = S.tableContainer
-      ? page.locator(S.tableContainer)
-      : page.locator('table').first();
-
-    this.btnRefresh = S.btnRefresh
-      ? page.locator(S.btnRefresh)
-      : page.getByRole('button', { name: /refresh/i });
+    this.tableContainer = page.locator(S.tableContainer);
+    this.btnRefresh = page.locator(S.btnRefresh);
   }
 
   // ── Assertions ─────────────────────────────────────────────────────────────
 
   async expectPageLoaded(): Promise<void> {
-    // 1. Validasi URL (SPA client-side routing)
     await expect(this.page).toHaveURL(/\/download$/);
 
-    // 2. Sinkronisasi UI menggunakan elemen stabil (tabel dan isinya)
     await expect(
       this.tableContainer,
       'Downloads List: tabel data harus tampil'
@@ -54,58 +45,74 @@ export class DownloadsListPage extends BasePage {
 
   // ── Actions ────────────────────────────────────────────────────────────────
 
-  /**
-   * Klik tombol refresh untuk memperbarui status file.
-   */
   async clickRefresh(): Promise<void> {
-    // Tombol refresh mungkin ada di kanan atas tabel
-    await this.btnRefresh.click().catch(() => {}); // Optional fallback
+    await this.btnRefresh.click().catch(() => {});
     await this.waitForLoading();
   }
 
   /**
-   * Mengembalikan locator baris report terbaru yang berstatus "Ready".
+   * Mengembalikan locator untuk baris report terbaru yang berstatus "Ready".
    */
   getLatestReadyReport(reportName: string): Locator {
-    // Cari baris dengan nama report dan status "Ready" (case-insensitive)
-    // .first() mengambil urutan teratas (terbaru) karena tabel default-nya descending
     return this.page
-      .locator('tbody tr')
-      .filter({ hasText: new RegExp(`^${reportName}`, 'i') })
+      .locator('table tbody tr')
+      .filter({ hasText: reportName })
       .filter({ hasText: /ready/i })
       .first();
   }
 
+  // ── Private ────────────────────────────────────────────────────────────────
+
   /**
-   * Menunggu status file menjadi Ready, lalu mendownloadnya.
-   * Melakukan proses polling jika diperlukan.
-   * 
-   * @returns Download object untuk validasi di test script
+   * Executes a click on the given button while racing a popup download
+   * event (Scenario A) against a direct page download event (Scenario B).
+   *
+   * The application triggers downloads via window.open(presignedS3Url)
+   * which opens a popup. The `download` event fires on the popup object,
+   * NOT on the main page. Scenario A (popup) must be first in the race.
    */
-  async downloadReport(reportName: string): Promise<import('@playwright/test').Download> {
+  private async handleDownloadClick(btn: Locator): Promise<Download> {
+    await btn.scrollIntoViewIfNeeded();
+    await expect(btn).toBeVisible({ timeout: 10_000 });
+
+    const [result] = await Promise.all([
+      Promise.race([
+        // Scenario A: window.open → popup → download on popup ❮ FIRST
+        this.page.waitForEvent('popup', { timeout: 15_000 }).then(async (popup) => {
+          console.log(`[Download] Popup opened: ${popup.url()}`);
+          const dl = await popup.waitForEvent('download', { timeout: 15_000 });
+          await popup.close().catch(() => {});
+          return dl;
+        }),
+
+        // Scenario B: direct download on main page (fallback)
+        this.page.waitForEvent('download', { timeout: 15_000 }),
+      ]),
+      btn.click(),
+    ]);
+
+    console.log(`✅ Downloaded: ${result.suggestedFilename()}`);
+    return result;
+  }
+
+  // ── Public API ─────────────────────────────────────────────────────────────
+
+  /**
+   * Menunggu status file menjadi Ready, scrolls the action column into view,
+   * then clicks the download icon and returns the resulting Download object.
+   *
+   * @param reportName - fragment of the report name heading text
+   */
+  async downloadReport(reportName: string): Promise<Download> {
     const latestReport = this.getLatestReadyReport(reportName);
-    
+
     await expect(
       latestReport,
       `Report "${reportName}" terbaru harus berstatus Ready untuk diunduh`
     ).toBeVisible({ timeout: 30_000 });
-    
-    const downloadIcon = latestReport.locator('td:last-child span[role="presentation"]');
-    
-    await expect(
-      downloadIcon,
-      `Ikon download untuk report "${reportName}" harus terlihat`
-    ).toBeVisible({ timeout: 5_000 });
 
-    await this.page.waitForTimeout(2500);
-
-    // ✅ waitForEvent('download') intercepts at network level
-    // → prevents new tab from opening entirely
-    const [download] = await Promise.all([
-      this.page.waitForEvent('download', { timeout: 30_000 }),
-      downloadIcon.click(),
-    ]);
-
-    return download;
+    // Use selector constant — HTML uses <span role="presentation"><svg>
+    const downloadIcon = latestReport.locator(S.btnDownloadFile).first();
+    return this.handleDownloadClick(downloadIcon);
   }
 }

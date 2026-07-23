@@ -1,26 +1,68 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect, Download } from '@playwright/test';
 
 export class DownloadsPopup {
     readonly title: Locator;
-    readonly firstDownload: Locator;
 
     constructor(private page: Page) {
-        this.title = this.page.getByRole('heading', { name: 'Recent Downloads' });
-        this.firstDownload = this.page.getByRole('button', { name: 'Download', exact: true }).first();
+        // The heading displayed after clicking the topbar Downloads icon
+        this.title = this.page.getByRole('heading', { name: 'Downloads', level: 1 });
     }
 
-    async downloadLatest(): Promise<import('@playwright/test').Download> {
-        await expect(this.title).toBeVisible();
-        
-        await this.page.waitForTimeout(2500);
+    // ── Private helpers ────────────────────────────────────────────────────
 
-        // ✅ waitForEvent('download') intercepts at network level
-        // → prevents new tab from opening entirely
-        const [download] = await Promise.all([
-            this.page.waitForEvent('download', { timeout: 30_000 }),
-            this.firstDownload.click(),
+    private getDownloadBtn(): Locator {
+        return this.page.locator('button[title="Download"]').first();
+    }
+
+    /**
+     * Executes a click on the given button while racing a popup download
+     * event (Scenario A) against a direct page download event (Scenario B).
+     *
+     * The application triggers downloads via window.open(presignedS3Url)
+     * which opens a popup. The `download` event fires on the popup object,
+     * NOT on the main page. Scenario A (popup) must be first in the race.
+     *
+     * The download button may be CSS-hidden (e.g. Ant Design responsive
+     * tables render a hidden DOM copy). force:true is required because
+     * the element is genuinely not user-visible.
+     */
+    private async handleDownloadClick(btn: Locator): Promise<Download> {
+        await btn.scrollIntoViewIfNeeded();
+
+        const [result] = await Promise.all([
+            Promise.race([
+                // Scenario A: window.open → popup → download on popup ❮ FIRST
+                this.page.waitForEvent('popup', { timeout: 15_000 }).then(async (popup) => {
+                    console.log(`[Download] Popup opened: ${popup.url()}`);
+                    const dl = await popup.waitForEvent('download', { timeout: 15_000 });
+                    await popup.close().catch(() => {});
+                    return dl;
+                }),
+
+                // Scenario B: direct download on main page (fallback)
+                this.page.waitForEvent('download', { timeout: 15_000 }),
+            ]),
+            // Use evaluate to trigger the JavaScript click handler directly,
+            // because the button element is CSS-hidden (Ant Design responsive
+            // tables render hidden duplicates) and Playwright's actionability
+            // checks may block the native click handler from firing.
+            btn.evaluate((el: HTMLElement) => el.click()),
         ]);
 
-        return download;
+        console.log(`✅ Downloaded: ${result.suggestedFilename()}`);
+        return result;
+    }
+
+    // ── Public API ─────────────────────────────────────────────────────────
+
+    /**
+     * Verifies the "Downloads" heading is visible, then clicks the
+     * first "Download" button and returns the resulting Download object.
+     */
+    async downloadLatest(): Promise<Download> {
+        await expect(this.title).toBeVisible();
+
+        const downloadBtn = this.getDownloadBtn();
+        return this.handleDownloadClick(downloadBtn);
     }
 }

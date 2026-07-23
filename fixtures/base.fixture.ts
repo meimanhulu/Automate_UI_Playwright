@@ -7,36 +7,53 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { QRGeneratePage } from '../pages/QRGeneratePage';
 
 /**
- * Global helper: Auto-close blank tabs dalam 150ms (event-driven)
- * 
- * Logic:
- * - Tab baru terbuka → listen URL change
- * - Jika URL berubah dari about:blank → legitimate tab → biarkan
- * - Jika masih about:blank setelah timeout → blank tab dari download → close
- * 
- * @param context - Browser context yang akan di-attach listener
- * @param timeoutMs - Timeout dalam ms (default: 150ms)
+ * Global helper: Auto-close truly-blank popup tabs from window.open(),
+ * WITHOUT killing tabs that are being used for a file download.
+ *
+ * Uses page.on('popup') — more reliable than context.on('page') because
+ * it only fires for window.open() triggered from this page, not for
+ * context.newPage() calls we make ourselves.
+ *
+ * A popup is kept alive if EITHER of these happens within `timeoutMs`:
+ *   1. It navigates to a real URL (legitimate new tab), OR
+ *   2. A `download` event fires on it (S3 presigned-URL download tab).
+ *
+ * Only if NEITHER happens within the timeout is the popup considered a
+ * genuinely blank/orphaned tab and closed.
+ *
+ * @param page - Playwright Page to attach the popup listener to
+ * @param timeoutMs - How long to wait for navigation/download before closing (default: 2000ms)
  */
-export function attachBlankTabAutoClose(
-  context: BrowserContext,
-  timeoutMs: number = 150
+export function attachPopupAutoClose(
+  page: Page,
+  timeoutMs: number = 2_000
 ): void {
-  context.on('page', async (newPage) => {
+  page.on('popup', async (popup) => {
     try {
-      // Event-driven: resolve SEGERA saat URL berubah dari about:blank
-      await newPage.waitForURL(
-        (url) => url.href !== 'about:blank' && url.href !== '',
-        { timeout: timeoutMs }
-      );
-      // URL berubah → legitimate tab → biarkan hidup
+      const reason = await Promise.race([
+        popup
+          .waitForURL(
+            (url) => url.href !== 'about:blank' && url.href !== '',
+            { timeout: timeoutMs }
+          )
+          .then(() => 'navigated' as const),
+        popup
+          .waitForEvent('download', { timeout: timeoutMs })
+          .then(() => 'download' as const),
+      ]);
+      // 'navigated' or 'download' → keep the popup alive
+      void reason;
     } catch {
-      // Masih about:blank setelah timeout → close
-      if (!newPage.isClosed()) {
-        await newPage.close().catch(() => {});
+      // Neither navigation nor download happened in time → truly blank tab → close it
+      if (!popup.isClosed()) {
+        await popup.close().catch(() => {});
       }
     }
   });
 }
+
+/** @deprecated Use {@link attachPopupAutoClose} — download-aware replacement. */
+export const attachBlankTabAutoClose = attachPopupAutoClose;
 
 type AllFixtures = {
   // ── Mobile ──
@@ -66,11 +83,10 @@ export const test = base.extend<AllFixtures>({
 
   // ── Mobile Page ──
   mobilePage: async ({ mobileContext }, use) => {
-    // Create page FIRST
     const page = await mobileContext.newPage();
 
-    // Attach listener AFTER - won't close main page
-    attachBlankTabAutoClose(mobileContext, 150);
+    // Attach listener to the page AFTER creation
+    attachBlankTabAutoClose(page, 150);
 
     await use(page);
     await page.close();
@@ -91,11 +107,10 @@ export const test = base.extend<AllFixtures>({
 
   // ── Logged In Mobile Page ──
   loggedInMobilePage: async ({ mobileContext }, use) => {
-    // Create page FIRST
     const page = await mobileContext.newPage();
 
-    // Attach listener AFTER
-    attachBlankTabAutoClose(mobileContext, 150);
+    // Attach listener to the page AFTER creation
+    attachBlankTabAutoClose(page, 150);
 
     const loginLogoutPage = new LoginLogoutPage(page);
     await loginLogoutPage.goto();

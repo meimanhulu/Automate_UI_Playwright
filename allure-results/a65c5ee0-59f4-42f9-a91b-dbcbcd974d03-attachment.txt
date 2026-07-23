@@ -1,0 +1,40 @@
+[afterAll] Auto-logout failed: locator.click: Test ended.
+Call log:
+  - waiting for locator('button:has(span.font-medium)')
+    - locator resolved to <button type="button">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    53 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+
+    at LoginLogoutPage.logout (C:\Users\GL\Documents\Automate_UI_Playwright\pages\LoginLogoutPage.ts:77:27)
+    at C:\Users\GL\Documents\Automate_UI_Playwright\tests\transaction\incoming-transaction.spec.ts:65:39 {
+  log: [
+    "  - waiting for locator('button:has(span.font-medium)')",
+    '    - locator resolved to <button type="button">…</button>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    53 × waiting for element to be visible, enabled and stable',
+    '       - element is not visible',
+    '     - retrying click action',
+    '       - waiting 500ms',
+    '    - waiting for element to be visible, enabled and stable'
+  ]
+}

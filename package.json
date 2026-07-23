@@ -26,6 +26,7 @@
     "@types/node": "^22.0.0",
     "@types/pdfkit": "^0.17.6",
     "@types/winston": "^2.4.4",
+    "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.2",
     "dotenv": "^16.4.5",
     "pdfkit": "^0.19.1",

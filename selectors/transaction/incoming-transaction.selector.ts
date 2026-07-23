@@ -1,44 +1,76 @@
 export const IncomingTransactionSelector = {
 
-  // ── Page Heading ───────────────────────────────────────────────────────────
-  pageHeading: '',
+  // ───────────────────────────────────────────────────────────────
+  // Page Heading
+  // ───────────────────────────────────────────────────────────────
+  pageHeading: 'h1.text-2xl.font-bold.text-light',
 
-  // ── Table / Data ───────────────────────────────────────────────────────────
+  // ───────────────────────────────────────────────────────────────
+  // Table
+  // ───────────────────────────────────────────────────────────────
   tableContainer: '.ant-table-wrapper, table',
   tableRow: 'table tbody > tr',
 
-  // ── Action Buttons ─────────────────────────────────────────────────────────
+  // ───────────────────────────────────────────────────────────────
+  // Header Actions
+  // ───────────────────────────────────────────────────────────────
 
-  // ── Actions / Header Buttons ──
-  btnExportIcon: '', // Gunakan getByRole('button', { name: /export|download/i }) di Page Object
-  
-  // ── (New) Action Menu Items dari Dropdown Export ──
-  // Sesuaikan selector berikut dengan struktur DOM aktual saat menu export terbuka
-  menuExportThisPage: '',
-  menuExportAllPage: '',
-  toastExportStarted: '',
+  // Export icon
+  btnExportIcon:
+    'button.w-8.h-8.xl\\:w-10.xl\\:h-10.rounded-md svg.iconify--ph',
 
-  // ── Recent Downloads Dropdown ──
-  btnDownloadsIcon: '', // Gunakan getByRole di Page Object
+  // Export dropdown
+  menuExportThisPage:
+    'button:has-text("Download This Page")',
 
-  // Show all downloads
-  showAllDownloads: '',
+  menuExportAllPage:
+    'button:has-text("Download All Page")',
 
-  // Filter button
-  btnFilter: '#filter-btn',
+  // Success Toast
+  toastExportStarted:
+    'article[role="alert"]',
 
+  // Downloads icon (Topbar)
+  btnDownloadsIcon:
+    'button[title="Downloads"]',
 
-  // ── Toast Notification ─────────────────────────────────────────────────────
+  // Recent Downloads popup
+  showAllDownloads:
+    'button:has-text("Show all downloads")',
 
-  // ── Search / Filter ────────────────────────────────────────────────────────
-  inputSearch: 'input[placeholder*="Search"]',
-  filterStatus: '.ant-select-selection-item',
-  filterDateStart: 'input[name="dateStart"]',
-  filterDateEnd: 'input[name="dateEnd"]',
-  btnApplyFilter: '',
+  // Filter
+  btnFilter:
+    '#filter-btn',
 
-  // ── Loading / Empty State ──────────────────────────────────────────────────
-  loadingSpinner: '.loading-spinner',
+  // ───────────────────────────────────────────────────────────────
+  // Search
+  // ───────────────────────────────────────────────────────────────
+
+  inputSearch:
+    'input.flex-1[placeholder]',
+
+  buttonSearchOptions:
+    'input[id*="Search Options"]',
+
+  fieldSearchByLabel:
+    'input[placeholder="Search by label"]',
+
+  trxIdButton:
+    'a:has-text("TRX ID")',
+
+  buttonRefresh:
+    'main.inline > a',
+
+  btnApplyFilter:
+    'button:has-text("Apply")',
+
+  // ───────────────────────────────────────────────────────────────
+  // Loading
+  // ───────────────────────────────────────────────────────────────
+
+  loadingSpinner:
+    '.loading-spinner',
+
   emptyState: '',
 
 } as const;

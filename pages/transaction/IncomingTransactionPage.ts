@@ -17,38 +17,21 @@ export class IncomingTransactionPage extends BaseTransactionPage {
   constructor(page: Page) {
     super(page);
 
-    this.pageHeading = S.pageHeading
-      ? page.locator(S.pageHeading)
-      : page.getByRole('heading', { name: /incoming transaction/i });
+    this.pageHeading = page.locator(S.pageHeading);
       
-    this.tableContainer = S.tableContainer
-      ? page.locator(S.tableContainer)
-      : page.locator('table').first();
+    this.tableContainer = page.locator(S.tableContainer);
 
-    // Menggunakan Web-First Assertions & Accessible locators untuk menghindari kerapuhan (brittle tests)
-    this.btnExportIcon = S.btnExportIcon
-      ? page.locator(S.btnExportIcon)
-      : page.locator('button').filter({ has: page.locator('svg.iconify--ph') }).first();
+    this.btnExportIcon = page.locator(S.btnExportIcon);
 
-    this.menuExportThisPage = S.menuExportThisPage
-      ? page.locator(S.menuExportThisPage)
-      : page.getByText(/download this page/i);
+    this.menuExportThisPage = page.locator(S.menuExportThisPage);
 
-    this.menuExportAllPage = S.menuExportAllPage
-      ? page.locator(S.menuExportAllPage)
-      : page.getByText(/download all page/i);
+    this.menuExportAllPage = page.locator(S.menuExportAllPage);
 
-    this.toastExportStarted = S.toastExportStarted
-      ? page.locator(S.toastExportStarted)
-      : page.getByText(/export started/i);
+    this.toastExportStarted = page.locator(S.toastExportStarted);
 
-    this.filterStatus = S.filterStatus
-      ? page.locator(S.filterStatus)
-      : page.getByRole('combobox', { name: /status/i });
+    this.filterStatus = page.locator('select[name="status"], select#status, .ant-select:has-text("Status")');
 
-    this.btnApplyFilter = S.btnApplyFilter
-      ? page.locator(S.btnApplyFilter)
-      : page.getByRole('button', { name: /apply/i });
+    this.btnApplyFilter = page.locator(S.btnApplyFilter);
   }
 
   // ── Navigation ─────────────────────────────────────────────────────────────

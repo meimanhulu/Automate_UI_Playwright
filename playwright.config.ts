@@ -27,36 +27,26 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report' }],           // backward-compat alias
     ['json', { outputFile: 'metrics/test-results.json' }],
     ['list'],
-    ['allure-playwright', { outputFolder: 'reports/allure-results', detail: true, suiteTitle: false }],
+    ['./reporters/MetricsReporter.ts'],
+    ['./reporters/ScreenshotReporter.ts'],
     ['./reporters/PdfReporter.ts'],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: process.env.APP_URL || 'https://uat.pg-poppay.com',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
-
-    /* Record video only on failure — saved to reports/videos */
     video: 'retain-on-failure',
-
-    /* Maximize browser window globally */
     viewport: null,
     launchOptions: {
       args: [
         '--start-maximized',
-        '--force-device-scale-factor=0.70'
       ],
       slowMo: 1500
     },
-
-    /* Fix #1: Grant permissions to avoid 'Failed to store the permission' errors */
     permissions: ['notifications', 'clipboard-read', 'clipboard-write'],
     storageState: undefined,
-
-    /* Fix #2: Accept downloads — required for download event handling */
     acceptDownloads: true,
+    screenshot: 'on',
   },
 
   /* Organized artifact output directory */
@@ -185,9 +175,11 @@ export default defineConfig({
       name: 'chromium',
       testDir: './tests',
       use: {
-        viewport: null,
+        viewport: { width: 1472, height: 1238 },
+        screenshot: 'on',
+        acceptDownloads: true,
         launchOptions: {
-          args: ['--start-maximized']
+          args: ['--start-maximized', '--window-size=1472,1238']
         }
       },
     },

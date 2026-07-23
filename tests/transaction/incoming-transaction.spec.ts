@@ -7,8 +7,8 @@
  */
 
 import { test, expect }                      from '../../fixtures/framework.fixture';
-import { attachBlankTabAutoClose }           from '../../fixtures/base.fixture';
-import type { Download, Page, BrowserContext } from '@playwright/test';
+import { attachPopupAutoClose }              from '../../fixtures/base.fixture';
+import type { Download, Page } from '@playwright/test';
 import { IncomingTransactionPage }      from '../../pages/transaction/IncomingTransactionPage';
 import { TopbarPage }                   from '../../pages/layout/TopbarPage';
 import { DownloadsListPage }            from '../../pages/downloads/DownloadsListPage';
@@ -21,7 +21,6 @@ import { assertVisible, assertText }    from '../../utils/AssertionHelper';
 // ─── Shared state (one login for all TCs in this file) ────────────────────────
 
 test.describe.serial('Incoming Transaction Flow @regression', () => {
-  let context:       BrowserContext;
   let page:          Page;
   let incomingPage:  IncomingTransactionPage;
   let topbarPage:    TopbarPage;
@@ -29,17 +28,16 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
 
   // ── Login once before all TCs ─────────────────────────────────────────────
 
-  test.beforeAll(async ({ browser }) => {
-    context = await browser.newContext({
-      baseURL: process.env.APP_URL || 'https://uat.pg-poppay.com',
-      acceptDownloads: true,
-    });
+  test.beforeAll(async ({ browser }, testInfo) => {
+    testInfo.setTimeout(60_000);
+    // Use browser.newPage() so the config `use` block is inherited
+    // (viewport: null + --start-maximized). A manually created context
+    // would lose those and open at default 1280x720, collapsing the sidebar.
+    page = await browser.newPage();
 
-    // Create main page FIRST
-    page = await context.newPage();
-
-    // Attach listener AFTER - won't close the main page
-    attachBlankTabAutoClose(context, 150);
+    // Attach popup handler AFTER the main page exists — download-aware,
+    // won't close a popup that's actively downloading a file.
+    attachPopupAutoClose(page);
 
     const loginPage = new LoginLogoutPage(page);
     await loginPage.navigate('https://uat.pg-poppay.com/login');
@@ -61,14 +59,13 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
 
   test.afterAll(async () => {
     try {
-      await page.waitForTimeout(2000);
-      await new LoginLogoutPage(page).logout();
-      await page.waitForTimeout(1500);
+      if (!page.isClosed()) {
+        await page.waitForTimeout(2000).catch(() => {});
+        await new LoginLogoutPage(page).logout().catch(() => {});
+        await page.waitForTimeout(1500).catch(() => {});
+      }
     } catch (e) {
       console.warn('[afterAll] Auto-logout failed:', e);
-    } finally {
-      await page.close();
-      await context.close();
     }
   });
 
@@ -139,6 +136,7 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
   // ─────────────────────────────────────────────────────────────────────────
 
   test('[TC-INC-003] Validasi fitur Async Download (S3) data Incoming (User Flow) @positive', async ({ logger, downloadValidator }) => {
+    test.setTimeout(60_000);
     const testInfo = test.info();
     await attachTestMetadata(testInfo, { tc_id: 'TC-INC-003', feature: 'Incoming Transaction', priority: 'High' });
 
@@ -178,8 +176,6 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
       logger.pass(`CSV downloaded: ${result.filename}  (${result.sizePretty})`);
       await milestone(page, testInfo, 'TC-INC-003_Download_Complete');
     });
-
-    await page.waitForTimeout(2000);
   });
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -187,8 +183,16 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
   // ─────────────────────────────────────────────────────────────────────────
 
   test('[TC-INC-004] Validasi fitur Async Download (S3) data Incoming (Show All Downloads) @positive', async ({ logger, downloadValidator }) => {
+    test.setTimeout(60_000);
     const testInfo = test.info();
     await attachTestMetadata(testInfo, { tc_id: 'TC-INC-004', feature: 'Incoming Transaction', priority: 'High' });
+
+    await test.step('Ensure Incoming Transaction page is ready', async () => {
+      logger.step(0, 'Verify page state after TC-003');
+      await page.waitForURL(/.*\/incoming/, { timeout: 10_000 });
+      await incomingPage.ensurePageReady();
+      logger.pass('Incoming Transaction page is ready');
+    });
 
     await test.step('Export This Page', async () => {
       logger.step(1, 'Export This Page');
@@ -235,8 +239,6 @@ test.describe.serial('Incoming Transaction Flow @regression', () => {
       logger.pass(`CSV downloaded: ${result.filename}  (${result.sizePretty})`);
       await milestone(page, testInfo, 'TC-INC-004_Download_Complete');
     });
-
-    await page.waitForTimeout(2000);
   });
 
 });

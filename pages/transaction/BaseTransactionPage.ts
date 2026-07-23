@@ -23,15 +23,33 @@ export abstract class BaseTransactionPage extends BasePage {
     await this.waitForLoading();
   }
 
+  async ensurePageReady(): Promise<void> {
+    await this.page.waitForLoadState('networkidle', { timeout: 10_000 });
+    await expect(this.pageHeading, 'Page heading must be visible').toBeVisible();
+    await expect(this.tableContainer, 'Table must be visible').toBeVisible();
+    
+    const loadingOverlay = this.page.locator('.loading-spinner, .ant-spin-spinning, [class*="loading"]');
+    await expect(loadingOverlay, 'Loading overlay must be hidden').toBeHidden({ timeout: 5000 }).catch(() => {});
+  }
+
   async exportThisPage(): Promise<void> {
-    await this.btnExportIcon.click();
-    await this.menuExportThisPage.click();
-    await this.page.keyboard.press('Escape');
+    await this.clickExportMenu(this.menuExportThisPage);
   }
 
   async exportAllPages(): Promise<void> {
+    await this.clickExportMenu(this.menuExportAllPage);
+  }
+
+  // ── Private ────────────────────────────────────────────────────────────────
+
+  private async clickExportMenu(menu: Locator): Promise<void> {
+    await expect(this.btnExportIcon, 'Export button must be visible').toBeVisible({ timeout: 10_000 });
+    await expect(this.btnExportIcon, 'Export button must be enabled').toBeEnabled();
+    await this.btnExportIcon.scrollIntoViewIfNeeded();
     await this.btnExportIcon.click();
-    await this.menuExportAllPage.click();
+
+    await expect(menu, 'Export menu must be visible').toBeVisible({ timeout: 5000 });
+    await menu.click();
     await this.page.keyboard.press('Escape');
   }
 

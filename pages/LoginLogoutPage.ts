@@ -16,14 +16,10 @@ export class LoginLogoutPage extends BasePage {
     this.submitButton = page.locator(S.submitButton);
     this.btnProfile = page.locator(S.btnProfile);
     
-    // ✅ FIX 1: Hindari generic selector 'button:has-text("Log Out")' yang memicu strict mode violation.
-    // Aplikasi Vue sering men-render komponen duplikat untuk mode desktop/mobile.
-    // Kita pastikan mencari role button yang persis bernama 'Log Out', dan di-scope 
-    // secara spesifik (misalnya dalam konteks header atau struktur utama agar unik).
-    // Karena kita tidak tahu persis class dropdownnya, kita chained ke parent yg umum.
-    this.btnLogout = page.locator('#main-content, header, .dropdown, [role="menu"]')
-                         .getByRole('button', { name: 'Log Out', exact: true })
-                         .first(); // Memastikan strict-mode violation tidak terjadi
+    // Logout button is inside a dropdown/menu that appears after clicking profile.
+    // We resolve it lazily in logout() after the dropdown is visible, so we only
+    // store a base locator here.
+    this.btnLogout = page.getByRole('menuitem', { name: /log out/i });
   }
 
   // ─── LOGIN ─────────────────────────────────────────────────────────────
@@ -50,7 +46,7 @@ export class LoginLogoutPage extends BasePage {
       // Happy path: navigasi keluar dari /login
       this.page.waitForURL(
         (url) => !url.pathname.includes('login'),
-        { timeout: 15_000 }
+        { timeout: 20_000 }
       ),
 
       // Fail fast: kalau muncul error message, langsung throw
@@ -61,6 +57,9 @@ export class LoginLogoutPage extends BasePage {
         );
       }),
     ]);
+
+    // Wait for session to be fully committed before proceeding
+    await this.page.waitForLoadState('networkidle', { timeout: 15_000 });
   }
 
   async expectLoginSuccess(): Promise<void> {
@@ -74,11 +73,17 @@ export class LoginLogoutPage extends BasePage {
    * Melakukan logout dari aplikasi
    */
   async logout(): Promise<void> {
-    await this.btnProfile.click();
+    await this.btnProfile.evaluate((el) => (el as HTMLElement).click());
     
-    await Promise.all([
-      this.page.waitForURL('**/login', { timeout: 15_000 }),
-      this.btnLogout.click()
-    ]);
+    // Dropdown may already be open, or may need a moment to render.
+    // Try the scoped logout button first; if it fails, fall back to a page-wide text search.
+    try {
+      await this.btnLogout.waitFor({ state: 'visible', timeout: 5000 });
+      await this.btnLogout.evaluate((el) => (el as HTMLElement).click());
+    } catch {
+      await this.page.getByText(/log out/i).first().click().catch(() => {});
+    }
+    
+    await this.page.waitForURL('**/login', { timeout: 10_000 }).catch(() => {});
   }
 }

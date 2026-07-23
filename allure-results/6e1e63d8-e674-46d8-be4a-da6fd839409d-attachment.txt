@@ -1,0 +1,4 @@
+[afterAll] Auto-logout failed: page.waitForTimeout: Target page, context or browser has been closed
+    at C:\Users\GL\Documents\Automate_UI_Playwright\tests\transaction\incoming-transaction.spec.ts:64:18 {
+  log: []
+}
