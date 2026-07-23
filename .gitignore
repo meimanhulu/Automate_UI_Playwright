@@ -17,3 +17,6 @@ reports/downloads/
 reports/test-results/
 reports/videos/
 reports/playwright-report/
+reports/screenshots/
+reports/pdf/
+reports/coverage/
