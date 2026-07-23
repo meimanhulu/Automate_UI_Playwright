@@ -449,3 +449,40 @@ Always:
 - minimize token usage
 - minimize terminal output
 - minimize tool usage
+
+# Playwright Locator Rules
+
+When creating new locators:
+
+Prefer:
+
+1. getByRole()
+2. getByLabel()
+3. getByPlaceholder()
+4. getByText()
+
+Avoid:
+
+- unstable CSS selectors
+- generated class names
+- long XPath
+
+When locator is unknown:
+Use Playwright codegen or Inspector before creating manual selectors.
+
+# Playwright Locator Policy
+
+Before creating or modifying locators:
+
+1. Verify actual DOM.
+2. Prefer Playwright Inspector/codegen when element behavior is unclear.
+3. Do not replace working locators without evidence.
+4. Avoid guessing based on screenshot or error message only.
+
+Locator priority:
+1. getByRole()
+2. getByLabel()
+3. getByPlaceholder()
+4. getByText()
+5. CSS selector
+6. XPath (only when necessary)

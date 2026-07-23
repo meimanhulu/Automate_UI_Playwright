@@ -16,6 +16,7 @@ export const OutgoingTransactionSelector = {
   toastExportStarted: '', // Gunakan getByText di Page Object
   
   // ── Search / Filter ────────────────────────────────────────────────────────
+  btnFilter: '#filter-btn',
   inputSearch: 'input[placeholder*="Search"]',
   filterStatus: '.ant-select-selection-item, select[name="status"]',
   filterDateStart: 'input[name="dateStart"]',

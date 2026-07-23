@@ -1,4 +1,4 @@
 export const TopbarSelector = {
-  iconDownload: '[aria-label="Downloads"], button:has-text("Downloads")',
+  iconDownload: 'button[title="Downloads"]',
   btnShowAllDownloads: 'button:has-text("Show All")',
 };

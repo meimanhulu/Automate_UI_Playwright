@@ -40,6 +40,8 @@ export default defineConfig({
     launchOptions: {
       args: [
         '--start-maximized',
+        '--window-size=1920,1080',
+        '--window-position=0,0',
       ],
       slowMo: 1500
     },
@@ -175,12 +177,18 @@ export default defineConfig({
       name: 'chromium',
       testDir: './tests',
       use: {
-        viewport: { width: 1472, height: 1238 },
+        channel: 'chrome',
+        viewport: null,
+        headless: false,
         screenshot: 'on',
         acceptDownloads: true,
         launchOptions: {
-          args: ['--start-maximized', '--window-size=1472,1238']
-        }
+          args: [
+            '--start-maximized',
+            '--window-size=1920,1080',
+            '--window-position=0,0',
+          ],
+        },
       },
     },
 

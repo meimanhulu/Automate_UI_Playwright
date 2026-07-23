@@ -11,6 +11,7 @@ export class OutgoingTransactionPage extends BaseTransactionPage {
   readonly menuExportThisPage: Locator;
   readonly menuExportAllPage: Locator;
   readonly toastExportStarted: Locator;
+  readonly btnFilter: Locator;
   readonly filterStatus: Locator;
   readonly btnApplyFilter: Locator;
 
@@ -41,6 +42,10 @@ export class OutgoingTransactionPage extends BaseTransactionPage {
     this.toastExportStarted = S.toastExportStarted
       ? page.locator(S.toastExportStarted)
       : page.getByText(/export started/i);
+
+    this.btnFilter = S.btnFilter
+      ? page.locator(S.btnFilter)
+      : page.locator('#filter-btn');
 
     this.filterStatus = S.filterStatus
       ? page.locator(S.filterStatus)

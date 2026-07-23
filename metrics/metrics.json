@@ -1,13 +1,13 @@
 {
-  "executionTime": 0,
-  "passed": 0,
-  "failed": 0,
-  "skipped": 0,
-  "total": 0,
-  "passRate": 0,
+  "executionTime": 47,
+  "passed": 1,
+  "failed": 1,
+  "skipped": 1,
+  "total": 3,
+  "passRate": 33.3,
   "browser": "Chromium",
   "environment": "UAT",
   "build": "2026-07-23",
-  "executionId": "f5b80614-a0cb-4774-bc9b-0ef81f094611",
-  "timestamp": "2026-07-23T13:15:14.131Z"
+  "executionId": "9f01a76d-70cf-4e6b-9de0-acd0879a97d4",
+  "timestamp": "2026-07-23T14:08:15.368Z"
 }

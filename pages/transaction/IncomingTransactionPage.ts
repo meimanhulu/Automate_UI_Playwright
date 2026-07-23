@@ -11,6 +11,7 @@ export class IncomingTransactionPage extends BaseTransactionPage {
   readonly menuExportThisPage: Locator;
   readonly menuExportAllPage: Locator;
   readonly toastExportStarted: Locator;
+  readonly btnFilter: Locator;
   readonly filterStatus: Locator;
   readonly btnApplyFilter: Locator;
 
@@ -29,7 +30,9 @@ export class IncomingTransactionPage extends BaseTransactionPage {
 
     this.toastExportStarted = page.locator(S.toastExportStarted);
 
-    this.filterStatus = page.locator('select[name="status"], select#status, .ant-select:has-text("Status")');
+    this.btnFilter = page.locator(S.btnFilter);
+
+    this.filterStatus = page.locator('[role="combobox"], .ant-select-selector, select, input[type="search"]').first();
 
     this.btnApplyFilter = page.locator(S.btnApplyFilter);
   }

@@ -8,6 +8,7 @@ export abstract class BaseTransactionPage extends BasePage {
   abstract readonly menuExportThisPage: Locator;
   abstract readonly menuExportAllPage: Locator;
   abstract readonly toastExportStarted: Locator;
+  abstract readonly btnFilter: Locator;
   abstract readonly filterStatus: Locator;
   abstract readonly btnApplyFilter: Locator;
 
@@ -18,7 +19,10 @@ export abstract class BaseTransactionPage extends BasePage {
   // ── Actions ────────────────────────────────────────────────────────────────
 
   async applyFilter(status: string): Promise<void> {
-    await this.filterStatus.selectOption({ label: status });
+    await this.btnFilter.click();
+    await this.page.waitForTimeout(1000);
+    await this.filterStatus.click({ timeout: 10_000 });
+    await this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option', { hasText: status }).click({ timeout: 10_000 });
     await this.btnApplyFilter.click();
     await this.waitForLoading();
   }
